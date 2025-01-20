@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
     right: "50%",
     left: "50%",
     top: "-60",
-    justifyContent: "flex-end",
   },
   imageAvatar: {
     borderRadius: 16,
@@ -90,6 +89,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.black_primary,
     placeholderTextColor: colors.text_gray,
+  },
+  passwordButtonText: {
+    color: colors.blue,
+  },
+  baseText: {
+    fontWeight: "400",
+    fontSize: 16,
+    lineHeight: 19,
   },
 });
 
