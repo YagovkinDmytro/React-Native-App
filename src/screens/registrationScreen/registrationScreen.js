@@ -12,10 +12,18 @@ import {
   TextInput,
 } from "react-native";
 import styles from "./stylesRegistrationScreen";
+import ShowPasswordButton from "../../components/ShowPasswordButton.js";
 
 import CirclePlusSvg from "../../../icons/CirclePlusSvg";
 
 const registrationScreen = () => {
+  const imageBG = require("../../../assets/images/Photo_BG.jpg");
+
+  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(true);
+
   const handleShowAlertMessage = () => {
     Alert.alert("Title", "Message", [
       { text: "Maybe", onPress: () => console.log("Maybe pressed") },
@@ -24,20 +32,14 @@ const registrationScreen = () => {
     ]);
   };
 
-  const imageBG = require("../../../assets/images/Photo_BG.jpg");
-
-  const [textLogin, setTextLogin] = useState("");
-  const [textEmail, setTextEmail] = useState("");
-  const [textPassword, setTextPassword] = useState("");
+  const showPassword = () => {
+    setIsPasswordVisible((prev) => !prev);
+  };
 
   return (
     <SafeAreaView>
       <StatusBar style="auto" />
-      <ImageBackground
-        source={imageBG}
-        resizeMode="cover"
-        style={styles.imageBackground}
-      >
+      <ImageBackground source={imageBG} style={styles.imageBackground}>
         <View style={styles.containerSignUp}>
           <View style={styles.imageContainer}>
             <Image style={styles.imageAvatar}></Image>
@@ -57,23 +59,30 @@ const registrationScreen = () => {
           <Text style={styles.textTitle}>Реєстрація</Text>
           <View style={styles.containerInput}>
             <TextInput
+              value={login}
               style={styles.input}
               placeholder="Логін"
-              value={textLogin}
-              onChangeText={setTextLogin}
+              onChangeText={setLogin}
             />
             <TextInput
+              value={email}
               style={styles.input}
               placeholder="Адреса електронної пошти"
-              value={textEmail}
-              onChangeText={setTextEmail}
+              onChangeText={setEmail}
             />
-            <TextInput
-              style={styles.input}
-              placeholder="Пароль"
-              value={textPassword}
-              onChangeText={setTextPassword}
-            />
+            <View>
+              <TextInput
+                value={password}
+                style={styles.input}
+                placeholder="Пароль"
+                onChangeText={setPassword}
+                secureTextEntry={isPasswordVisible}
+              />
+              <ShowPasswordButton
+                showPassword={showPassword}
+                isPasswordVisible={isPasswordVisible}
+              />
+            </View>
           </View>
           <Pressable
             onPress={handleShowAlertMessage}
