@@ -19,6 +19,7 @@ const ShowPasswordButton = ({ showPassword, isPasswordVisible }) => {
 
 const styles = StyleSheet.create({
   baseText: {
+    fontFamily: "Roboto-Regular",
     fontWeight: "400",
     fontSize: 16,
     lineHeight: 19,
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
   },
   showButton: {
     position: "absolute",
-    right: 32,
+    right: 16,
     top: 16,
   },
 });

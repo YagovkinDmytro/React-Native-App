@@ -10,19 +10,19 @@ const styles = StyleSheet.create({
     left: "50%",
     top: "-60",
   },
-  imageAvatar: {
-    borderRadius: 16,
-    width: 120,
-    height: 120,
-    backgroundColor: colors.light_gray,
-    alignItems: "center",
-  },
   containerSignUp: {
     width: "100%",
     height: 549,
     backgroundColor: colors.white,
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
+  },
+  imageAvatar: {
+    borderRadius: 16,
+    width: 120,
+    height: 120,
+    backgroundColor: colors.light_gray,
+    alignItems: "center",
   },
   imageBackground: {
     width: "100%",
@@ -73,30 +73,6 @@ const styles = StyleSheet.create({
     marginTop: 32,
     marginBottom: 43,
     gap: 16,
-  },
-  input: {
-    height: 50,
-    borderWidth: 1,
-    marginLeft: 16,
-    marginRight: 16,
-    paddingLeft: 16,
-    backgroundColor: colors.light_gray,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: colors.border_gray,
-    fontFamily: "Roboto-Regular",
-    fontWeight: 400,
-    fontSize: 16,
-    color: colors.black_primary,
-    placeholderTextColor: colors.text_gray,
-  },
-  passwordButtonText: {
-    color: colors.blue,
-  },
-  baseText: {
-    fontWeight: "400",
-    fontSize: 16,
-    lineHeight: 19,
   },
 });
 
