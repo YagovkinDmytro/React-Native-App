@@ -6,23 +6,41 @@ import {
   Text,
   Pressable,
   TouchableWithoutFeedback,
-  Alert,
   ImageBackground,
+  Alert,
   Image,
-  TextInput,
 } from "react-native";
 import styles from "./stylesRegistrationScreen";
 import ShowPasswordButton from "../../components/ShowPasswordButton.js";
+import Input from "../../components/Input";
 
 import CirclePlusSvg from "../../../icons/CirclePlusSvg";
 
 const registrationScreen = () => {
   const imageBG = require("../../../assets/images/Photo_BG.jpg");
 
-  const [login, setLogin] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({
+    login: "",
+    email: "",
+    password: "",
+  });
+
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
+
+  const handleInputChange = (name, value) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
+  };
+
+  const showPassword = () => {
+    setIsPasswordVisible((prev) => !prev);
+  };
+
+  const handleSubmit = () => {
+    console.log("User Info:", user);
+  };
 
   const handleShowAlertMessage = () => {
     Alert.alert("Title", "Message", [
@@ -30,10 +48,6 @@ const registrationScreen = () => {
       { text: "No", onPress: () => console.log("No pressed") },
       { text: "Yes", onPress: () => console.log("Yes pressed") },
     ]);
-  };
-
-  const showPassword = () => {
-    setIsPasswordVisible((prev) => !prev);
   };
 
   return (
@@ -55,37 +69,32 @@ const registrationScreen = () => {
               </View>
             </Pressable>
           </View>
-
           <Text style={styles.textTitle}>Реєстрація</Text>
           <View style={styles.containerInput}>
-            <TextInput
-              value={login}
-              style={styles.input}
+            <Input
+              value={user.login}
               placeholder="Логін"
-              onChangeText={setLogin}
+              onChangeText={(value) => handleInputChange("login", value)}
             />
-            <TextInput
-              value={email}
-              style={styles.input}
+            <Input
+              value={user.email}
               placeholder="Адреса електронної пошти"
-              onChangeText={setEmail}
+              onChangeText={(value) => handleInputChange("email", value)}
             />
-            <View>
-              <TextInput
-                value={password}
-                style={styles.input}
-                placeholder="Пароль"
-                onChangeText={setPassword}
-                secureTextEntry={isPasswordVisible}
-              />
+            <Input
+              value={user.password}
+              placeholder="Пароль"
+              onChangeText={(value) => handleInputChange("password", value)}
+              secureTextEntry={isPasswordVisible}
+            >
               <ShowPasswordButton
                 showPassword={showPassword}
                 isPasswordVisible={isPasswordVisible}
               />
-            </View>
+            </Input>
           </View>
           <Pressable
-            onPress={handleShowAlertMessage}
+            onPress={handleSubmit}
             style={({ pressed }) => [styles.button, pressed && styles.pressed]}
           >
             <Text style={styles.buttonSignUpText}>Зареєстуватися</Text>
