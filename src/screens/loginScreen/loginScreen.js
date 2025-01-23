@@ -13,23 +13,21 @@ import {
   Platform,
   Keyboard,
 } from "react-native";
-import styles from "./stylesRegistrationScreen";
+import styles from "./stylesLoginScreen.js";
 import ShowPasswordButton from "../../components/ShowPasswordButton.js";
-import Input from "../../components/Input";
+import Input from "../../components/Input.js";
 
-import CirclePlusSvg from "../../../icons/CirclePlusSvg";
+import CirclePlusSvg from "../../../icons/CirclePlusSvg.js";
 import Button from "../../components/Button.js";
 
-const registrationScreen = () => {
+const loginScreen = () => {
   const imageBG = require("../../../assets/images/Photo_BG.jpg");
   const noImageAvatar = require("../../../assets/images/noImageAvatar.png");
 
   const [user, setUser] = useState({
-    login: "",
     email: "",
     password: "",
     isPasswordVisible: true,
-    avatarUri: "",
   });
 
   const handleInputChange = (name, value) => {
@@ -47,7 +45,7 @@ const registrationScreen = () => {
   };
 
   const handleSubmit = () => {
-    if (!user.login.trim() || !user.email.trim() || !user.password.trim()) {
+    if (!user.email.trim() || !user.password.trim()) {
       Alert.alert("Error", "All fields are required!");
       return;
     }
@@ -59,16 +57,8 @@ const registrationScreen = () => {
       Alert.alert("Error", "Password must be at least 6 characters long!");
       return;
     }
-    const userInfo = { login: user.login, email: user.email };
+    const userInfo = { email: user.email };
     console.log("User Info:", userInfo);
-  };
-
-  const handleAddAvatar = () => {
-    Alert.alert("Add New Photo", "Choose whatever you want to load", [
-      { text: "Maybe", onPress: () => console.log("Maybe pressed") },
-      { text: "No", onPress: () => console.log("No pressed") },
-      { text: "Yes", onPress: () => console.log("Yes pressed") },
-    ]);
   };
 
   return (
@@ -79,35 +69,9 @@ const registrationScreen = () => {
           <KeyboardAvoidingView
             behavior={Platform.OS == "ios" ? "padding" : "height"}
           >
-            <View style={styles.containerSignUp}>
-              <View style={styles.imageContainer}>
-                <Image
-                  style={styles.imageAvatar}
-                  source={
-                    user.avatarUri ? { uri: user.avatarUri } : noImageAvatar
-                  }
-                ></Image>
-                <Pressable
-                  accessible={true}
-                  accessibilityLabel="Add Avatar"
-                  onPress={handleAddAvatar}
-                  style={({ pressed }) => [
-                    styles.buttonAdd,
-                    pressed && styles.pressed,
-                  ]}
-                >
-                  <View>
-                    <CirclePlusSvg width="25" height="25" />
-                  </View>
-                </Pressable>
-              </View>
-              <Text style={styles.textTitle}>Реєстрація</Text>
+            <View style={styles.containerSignIn}>
+              <Text style={styles.textTitle}>Увійти</Text>
               <View style={styles.containerInput}>
-                <Input
-                  value={user.login}
-                  placeholder="Логін"
-                  onChangeText={(value) => handleInputChange("login", value)}
-                />
                 <Input
                   value={user.email}
                   placeholder="Адреса електронної пошти"
@@ -125,14 +89,16 @@ const registrationScreen = () => {
                   />
                 </Input>
               </View>
-              <Button onPress={handleSubmit} buttonTitle="Зареєстуватися" />
+              <Button onPress={handleSubmit} buttonTitle="Увійти" />
               <View style={styles.buttonSignInContainer}>
                 <Text style={[styles.baseText, styles.buttonText]}>
-                  Вже є акаунт?
+                  Немає акаунту?
                 </Text>
-                <TouchableWithoutFeedback onPress={() => console.log("Увійти")}>
+                <TouchableWithoutFeedback
+                  onPress={() => console.log("Зареєструватися")}
+                >
                   <Text style={[styles.baseText, styles.buttonSignInText]}>
-                    Увійти
+                    Зареєструватися
                   </Text>
                 </TouchableWithoutFeedback>
               </View>
@@ -144,4 +110,4 @@ const registrationScreen = () => {
   );
 };
 
-export default registrationScreen;
+export default loginScreen;
