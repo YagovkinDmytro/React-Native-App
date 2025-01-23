@@ -20,7 +20,7 @@ const ShowPasswordButton = ({ showPassword, isPasswordVisible }) => {
 const styles = StyleSheet.create({
   baseText: {
     fontFamily: "Roboto-Regular",
-    fontWeight: "400",
+    fontWeight: 400,
     fontSize: 16,
     lineHeight: 19,
   },

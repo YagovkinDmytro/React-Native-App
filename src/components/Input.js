@@ -40,13 +40,19 @@ const Input = ({
         onFocus={onFocus}
         onBlur={onBlur}
       />
-
       {children}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  baseText: {
+    fontFamily: "Roboto-Regular",
+    fontWeight: 400,
+    fontSize: 16,
+    lineHeight: 19,
+    color: colors.black_primary,
+  },
   input: {
     height: 50,
     borderWidth: 1,
@@ -58,13 +64,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.light_gray,
     placeholderTextColor: colors.text_gray,
     justifyContent: "center",
-  },
-  baseText: {
-    fontFamily: "Roboto-Regular",
-    fontWeight: "400",
-    fontSize: 16,
-    lineHeight: 19,
-    color: colors.black_primary,
   },
   focused: {
     backgroundColor: colors.white,

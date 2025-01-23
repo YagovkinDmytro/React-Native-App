@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   View,
@@ -9,12 +9,16 @@ import {
   ImageBackground,
   Alert,
   Image,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
 } from "react-native";
 import styles from "./stylesRegistrationScreen";
 import ShowPasswordButton from "../../components/ShowPasswordButton.js";
 import Input from "../../components/Input";
 
 import CirclePlusSvg from "../../../icons/CirclePlusSvg";
+import Button from "../../components/Button.js";
 
 const registrationScreen = () => {
   const imageBG = require("../../../assets/images/Photo_BG.jpg");
@@ -23,9 +27,8 @@ const registrationScreen = () => {
     login: "",
     email: "",
     password: "",
+    isPasswordVisible: true,
   });
-
-  const [isPasswordVisible, setIsPasswordVisible] = useState(true);
 
   const handleInputChange = (name, value) => {
     setUser((prevUser) => ({
@@ -34,12 +37,16 @@ const registrationScreen = () => {
     }));
   };
 
-  const showPassword = () => {
-    setIsPasswordVisible((prev) => !prev);
+  const showPassword = (name) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: !prevUser[name],
+    }));
   };
 
   const handleSubmit = () => {
-    console.log("User Info:", user);
+    const userInfo = { login: user.login, email: user.email };
+    console.log("User Info:", userInfo);
   };
 
   const handleShowAlertMessage = () => {
@@ -53,59 +60,65 @@ const registrationScreen = () => {
   return (
     <SafeAreaView>
       <StatusBar style="auto" />
-      <ImageBackground source={imageBG} style={styles.imageBackground}>
-        <View style={styles.containerSignUp}>
-          <View style={styles.imageContainer}>
-            <Image style={styles.imageAvatar}></Image>
-            <Pressable
-              onPress={handleShowAlertMessage}
-              style={({ pressed }) => [
-                styles.buttonAdd,
-                pressed && styles.pressed,
-              ]}
+      <Pressable onPress={() => Keyboard.dismiss()}>
+        <ImageBackground source={imageBG} style={styles.imageBackground}>
+          <View style={styles.containerSignUp}>
+            <View style={styles.imageContainer}>
+              <Image style={styles.imageAvatar}></Image>
+              <Pressable
+                onPress={handleShowAlertMessage}
+                style={({ pressed }) => [
+                  styles.buttonAdd,
+                  pressed && styles.pressed,
+                ]}
+              >
+                <View>
+                  <CirclePlusSvg width="25" height="25" />
+                </View>
+              </Pressable>
+            </View>
+            <Text style={styles.textTitle}>Реєстрація</Text>
+            <KeyboardAvoidingView
+              behavior={Platform.OS == "ios" ? "padding" : "height"}
             >
-              <View>
-                <CirclePlusSvg width="25" height="25" />
+              <View style={styles.containerInput}>
+                <Input
+                  value={user.login}
+                  placeholder="Логін"
+                  onChangeText={(value) => handleInputChange("login", value)}
+                />
+                <Input
+                  value={user.email}
+                  placeholder="Адреса електронної пошти"
+                  onChangeText={(value) => handleInputChange("email", value)}
+                />
+                <Input
+                  value={user.password}
+                  placeholder="Пароль"
+                  onChangeText={(value) => handleInputChange("password", value)}
+                  secureTextEntry={user.isPasswordVisible}
+                >
+                  <ShowPasswordButton
+                    showPassword={() => showPassword("isPasswordVisible")}
+                    isPasswordVisible={user.isPasswordVisible}
+                  />
+                </Input>
               </View>
-            </Pressable>
+            </KeyboardAvoidingView>
+            <Button onPress={handleSubmit} buttonTitle="Зареєстуватися" />
+            <View style={styles.buttonSignInContainer}>
+              <Text style={[styles.baseText, styles.buttonText]}>
+                Вже є акаунт?
+              </Text>
+              <TouchableWithoutFeedback onPress={() => console.log("Увійти")}>
+                <Text style={[styles.baseText, styles.buttonSignInText]}>
+                  Увійти
+                </Text>
+              </TouchableWithoutFeedback>
+            </View>
           </View>
-          <Text style={styles.textTitle}>Реєстрація</Text>
-          <View style={styles.containerInput}>
-            <Input
-              value={user.login}
-              placeholder="Логін"
-              onChangeText={(value) => handleInputChange("login", value)}
-            />
-            <Input
-              value={user.email}
-              placeholder="Адреса електронної пошти"
-              onChangeText={(value) => handleInputChange("email", value)}
-            />
-            <Input
-              value={user.password}
-              placeholder="Пароль"
-              onChangeText={(value) => handleInputChange("password", value)}
-              secureTextEntry={isPasswordVisible}
-            >
-              <ShowPasswordButton
-                showPassword={showPassword}
-                isPasswordVisible={isPasswordVisible}
-              />
-            </Input>
-          </View>
-          <Pressable
-            onPress={handleSubmit}
-            style={({ pressed }) => [styles.button, pressed && styles.pressed]}
-          >
-            <Text style={styles.buttonSignUpText}>Зареєстуватися</Text>
-          </Pressable>
-          <TouchableWithoutFeedback
-            onPress={() => console.log("Вже є акаунт? Увійти")}
-          >
-            <Text style={styles.buttonText}>Вже є акаунт? Увійти</Text>
-          </TouchableWithoutFeedback>
-        </View>
-      </ImageBackground>
+        </ImageBackground>
+      </Pressable>
     </SafeAreaView>
   );
 };
