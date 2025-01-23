@@ -1,6 +1,7 @@
 import { useFonts } from "expo-font";
 import { StyleSheet, ActivityIndicator, View } from "react-native";
 import RegistrationScreen from "./src/screens/registrationScreen/registrationScreen";
+import LoginScreen from "./src/screens/loginScreen/loginScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -17,7 +18,12 @@ export default function App() {
       </View>
     );
   }
-  return <RegistrationScreen />;
+  return (
+    <View style={{ flex: 1 }}>
+      {/* <RegistrationScreen /> */}
+      <LoginScreen />
+    </View>
+  );
 }
 
 const style = StyleSheet.create({
