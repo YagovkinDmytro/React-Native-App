@@ -17,9 +17,11 @@ import ShowPasswordButton from "../../components/ShowPasswordButton.js";
 import Input from "../../components/Input.js";
 
 import Button from "../../components/Button.js";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginScreen = () => {
   const imageBG = require("../../../assets/images/Photo_BG.jpg");
+  const navigation = useNavigation();
 
   const [user, setUser] = useState({
     email: "",
@@ -58,6 +60,13 @@ const LoginScreen = () => {
     console.log("User Info:", userInfo);
   };
 
+  const onSignUp = () => {
+    navigation.navigate("Registration", {
+      email: user.email,
+      password: user.password,
+    });
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar style="auto" />
@@ -91,9 +100,7 @@ const LoginScreen = () => {
                 <Text style={[styles.baseText, styles.buttonText]}>
                   Немає акаунту?
                 </Text>
-                <TouchableWithoutFeedback
-                  onPress={() => console.log("Зареєструватися")}
-                >
+                <TouchableWithoutFeedback onPress={onSignUp}>
                   <Text style={[styles.baseText, styles.buttonSignInText]}>
                     Зареєструватися
                   </Text>

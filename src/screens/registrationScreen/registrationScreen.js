@@ -19,10 +19,13 @@ import Input from "../../components/Input.js";
 
 import CirclePlusSvg from "../../../icons/CirclePlusSvg.js";
 import Button from "../../components/Button.js";
+import { useNavigation } from "@react-navigation/native";
 
 const RegistrationScreen = () => {
   const imageBG = require("../../../assets/images/Photo_BG.jpg");
   const noImageAvatar = require("../../../assets/images/noImageAvatar.png");
+
+  const navigation = useNavigation();
 
   const [user, setUser] = useState({
     login: "",
@@ -69,6 +72,13 @@ const RegistrationScreen = () => {
       { text: "No", onPress: () => console.log("No pressed") },
       { text: "Yes", onPress: () => console.log("Yes pressed") },
     ]);
+  };
+
+  const onSignIn = () => {
+    navigation.navigate("Login", {
+      email: user.email,
+      password: user.password,
+    });
   };
 
   return (
@@ -130,7 +140,7 @@ const RegistrationScreen = () => {
                 <Text style={[styles.baseText, styles.buttonText]}>
                   Вже є акаунт?
                 </Text>
-                <TouchableWithoutFeedback onPress={() => console.log("Увійти")}>
+                <TouchableWithoutFeedback onPress={onSignIn}>
                   <Text style={[styles.baseText, styles.buttonSignInText]}>
                     Увійти
                   </Text>
