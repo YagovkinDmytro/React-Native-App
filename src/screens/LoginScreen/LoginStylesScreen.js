@@ -46,11 +46,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     textDecorationLine: "underline",
   },
-  buttonAdd: {
-    position: "absolute",
-    bottom: 14,
-    left: 47,
-  },
   containerInput: {
     marginTop: 32,
     marginBottom: 43,

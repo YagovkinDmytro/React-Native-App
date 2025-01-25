@@ -13,14 +13,14 @@ import {
   Platform,
   Keyboard,
 } from "react-native";
-import styles from "./stylesRegistrationScreen";
+import styles from "./RegistrationStylesScreen.js";
 import ShowPasswordButton from "../../components/ShowPasswordButton.js";
-import Input from "../../components/Input";
+import Input from "../../components/Input.js";
 
-import CirclePlusSvg from "../../../icons/CirclePlusSvg";
+import CirclePlusSvg from "../../../icons/CirclePlusSvg.js";
 import Button from "../../components/Button.js";
 
-const registrationScreen = () => {
+const RegistrationScreen = () => {
   const imageBG = require("../../../assets/images/Photo_BG.jpg");
   const noImageAvatar = require("../../../assets/images/noImageAvatar.png");
 
@@ -144,4 +144,4 @@ const registrationScreen = () => {
   );
 };
 
-export default registrationScreen;
+export default RegistrationScreen;
