@@ -8,21 +8,18 @@ import {
   TouchableWithoutFeedback,
   ImageBackground,
   Alert,
-  Image,
   KeyboardAvoidingView,
   Platform,
   Keyboard,
 } from "react-native";
-import styles from "./stylesLoginScreen.js";
+import styles from "./LoginStylesScreen.js";
 import ShowPasswordButton from "../../components/ShowPasswordButton.js";
 import Input from "../../components/Input.js";
 
-import CirclePlusSvg from "../../../icons/CirclePlusSvg.js";
 import Button from "../../components/Button.js";
 
-const loginScreen = () => {
+const LoginScreen = () => {
   const imageBG = require("../../../assets/images/Photo_BG.jpg");
-  const noImageAvatar = require("../../../assets/images/noImageAvatar.png");
 
   const [user, setUser] = useState({
     email: "",
@@ -110,4 +107,4 @@ const loginScreen = () => {
   );
 };
 
-export default loginScreen;
+export default LoginScreen;
