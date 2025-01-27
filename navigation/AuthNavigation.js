@@ -2,12 +2,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import RegistrationScreen from "../src/screens/RegistrationScreen/RegistrationScreen";
 import LoginScreen from "../src/screens/LoginScreen/LoginScreen";
 import LogoutButton from "../src/components/LogoutButton";
-const MainStack = createStackNavigator();
+const Stack = createStackNavigator();
 
 const AuthNavigation = () => {
   return (
-    <MainStack.Navigator initialRouteName="Login">
-      <MainStack.Screen
+    <Stack.Navigator initialRouteName="Login">
+      <Stack.Screen
         name="Login"
         component={LoginScreen}
         options={{
@@ -17,12 +17,12 @@ const AuthNavigation = () => {
           headerRight: () => <LogoutButton />,
         }}
       />
-      <MainStack.Screen
+      <Stack.Screen
         name="Registration"
         component={RegistrationScreen}
         options={{ headerShown: true }}
       />
-    </MainStack.Navigator>
+    </Stack.Navigator>
   );
 };
 
