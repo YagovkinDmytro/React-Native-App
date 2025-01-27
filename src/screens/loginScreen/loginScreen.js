@@ -17,15 +17,20 @@ import ShowPasswordButton from "../../components/ShowPasswordButton.js";
 import Input from "../../components/Input.js";
 
 import Button from "../../components/Button.js";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const LoginScreen = () => {
   const imageBG = require("../../../assets/images/Photo_BG.jpg");
+
   const navigation = useNavigation();
 
+  const { params } = useRoute();
+  const email = params?.email || "";
+  const password = params?.password || "";
+
   const [user, setUser] = useState({
-    email: "",
-    password: "",
+    email,
+    password,
     isPasswordVisible: true,
   });
 
