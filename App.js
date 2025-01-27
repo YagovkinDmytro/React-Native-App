@@ -3,6 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { StyleSheet, ActivityIndicator, View } from "react-native";
 import AuthNavigation from "./navigation/AuthNavigation";
+import UserCard from "./src/components/UserCard";
+import PostsScreen from "./src/screens/PostsScreen/PostsScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -11,6 +13,8 @@ export default function App() {
     "Roboto-Light": require("./assets/fonts/Roboto-Light.ttf"),
     "Roboto-Bold": require("./assets/fonts/Roboto-Bold.ttf"),
   });
+
+  const isLoggedIn = false;
 
   if (!fontsLoaded) {
     return (
@@ -21,7 +25,9 @@ export default function App() {
   }
   return (
     <NavigationContainer>
-      <AuthNavigation />
+      <PostsScreen />
+      {/* <UserCard /> */}
+      {/* {isLoggedIn ? <HomeScreen /> : <AuthNavigation />} */}
     </NavigationContainer>
   );
 }
