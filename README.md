@@ -1,4 +1,4 @@
-React Native. Screen layout. Working with styles. Debug
+React Native App.
 
 Step 1 "Screen layout. Working with styles. Debug"
 

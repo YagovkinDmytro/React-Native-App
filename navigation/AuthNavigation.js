@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import LogoutButton from "../src/components/LogoutButton";
 import RegistrationScreen from "../src/screens/RegistrationScreen/RegistrationScreen";
 import LoginScreen from "../src/screens/LoginScreen/LoginScreen";
+import PostsScreen from "../src/screens/PostsScreen/PostsScreen";
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,11 @@ const AuthNavigation = () => {
         name="Registration"
         component={RegistrationScreen}
         options={{ title: "Registration Screen" }}
+      />
+      <Stack.Screen
+        name="PostsScreen"
+        component={PostsScreen}
+        options={{ title: "PostsScreen" }}
       />
     </Stack.Navigator>
   );
