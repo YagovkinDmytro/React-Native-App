@@ -63,6 +63,7 @@ const LoginScreen = () => {
     }
     const userInfo = { email: user.email };
     console.log("User Info:", userInfo);
+    goToHomeScreen();
   };
 
   const onSignUp = () => {
@@ -70,6 +71,10 @@ const LoginScreen = () => {
       email: user.email,
       password: user.password,
     });
+  };
+
+  const goToHomeScreen = () => {
+    navigation.navigate("PostsScreen");
   };
 
   return (

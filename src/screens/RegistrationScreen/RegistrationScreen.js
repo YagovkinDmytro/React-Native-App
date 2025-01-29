@@ -68,6 +68,7 @@ const RegistrationScreen = () => {
     }
     const userInfo = { login: user.login, email: user.email };
     console.log("User Info:", userInfo);
+    goToHomeScreen();
   };
 
   const handleAddAvatar = () => {
@@ -83,6 +84,10 @@ const RegistrationScreen = () => {
       email: user.email,
       password: user.password,
     });
+  };
+
+  const goToHomeScreen = () => {
+    navigation.navigate("PostsScreen");
   };
 
   return (
