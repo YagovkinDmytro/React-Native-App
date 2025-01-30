@@ -10,9 +10,7 @@ const AuthNavigation = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: true,
-        headerRightContainerStyle: { paddingRight: 16 },
-        headerRight: () => <LogoutButton />,
+        headerShown: false,
       }}
       initialRouteName="Login"
     >
@@ -27,9 +25,9 @@ const AuthNavigation = () => {
         options={{ title: "Registration Screen" }}
       />
       <Stack.Screen
-        name="PostsScreen"
+        name="Posts"
         component={PostsScreen}
-        options={{ title: "PostsScreen" }}
+        options={{ title: "Posts Screen" }}
       />
     </Stack.Navigator>
   );
