@@ -34,8 +34,8 @@ const Input = ({
         autoFocus={autofocus}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        secureTextEntry={secureTextEntry}
         placeholderTextColor={colors.text_gray}
+        secureTextEntry={secureTextEntry}
         style={styles.baseText}
         autoCapitalize="none"
         onFocus={onFocus}
@@ -56,17 +56,14 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    borderWidth: 1,
-    marginLeft: 16,
-    marginRight: 16,
-    paddingLeft: 16,
+    justifyContent: "center",
+    borderBottomWidth: 1,
     borderRadius: 8,
     borderColor: colors.border_gray,
-    backgroundColor: colors.light_gray,
-    justifyContent: "center",
+    marginLeft: 16,
+    marginRight: 16,
   },
   focused: {
-    backgroundColor: colors.white,
     borderColor: colors.orange,
   },
 });

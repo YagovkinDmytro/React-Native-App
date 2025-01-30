@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  View,
-  Image,
-  SafeAreaView,
-  StatusBar,
-  Text,
-} from "react-native";
+import { StyleSheet, View, Image, Text } from "react-native";
 import { colors } from "../../styles/global";
 
 const UserCard = () => {
@@ -20,7 +13,7 @@ const UserCard = () => {
         style={styles.imageAvatar}
         source={avatarUri ? avatarUri : noImageAvatar}
       ></Image>
-      <View style={styles.textContainer}>
+      <View>
         <Text style={styles.textName}>Donald Duck</Text>
         <Text style={styles.textEmail}>DonaldDuck@gmail.com</Text>
       </View>
@@ -54,5 +47,4 @@ const styles = StyleSheet.create({
     height: 60,
     backgroundColor: colors.light_gray,
   },
-  textContainer: {},
 });

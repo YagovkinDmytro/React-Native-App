@@ -14,8 +14,8 @@ import {
 import { colors } from "../../../styles/global.js";
 import PostCardItem from "../../components/PostCardItem.js";
 import CircleDelete from "../../../icons/CircleDelete.js";
-import LogoutIcon from "../../../icons/LogoutIcon.js";
 import { useNavigation } from "@react-navigation/native";
+import LogoutButton from "../../components/LogoutButton.js";
 
 const dataProfile = [
   {
@@ -71,29 +71,13 @@ const ProfileScreen = () => {
     ]);
   };
 
-  const onLogout = () => {
-    navigation.navigate("Login");
-  };
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar style="auto" />
       <ImageBackground source={imageBG} style={styles.imageBackground}>
         <View style={styles.container}>
           <View style={styles.wrapperContainer}>
-            <Pressable
-              accessible={true}
-              accessibilityLabel="Logout"
-              onPress={onLogout}
-              style={({ pressed }) => [
-                styles.buttonLogout,
-                pressed && styles.pressed,
-              ]}
-            >
-              <View>
-                <LogoutIcon width="24" height="24" />
-              </View>
-            </Pressable>
+            <LogoutButton />
             <View style={styles.imageContainer}>
               <Image
                 style={styles.imageAvatar}
@@ -158,11 +142,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
     marginTop: 147,
-  },
-  buttonLogout: {
-    marginLeft: "auto",
-    marginTop: 22,
-    marginRight: 16,
   },
   buttonAdd: {
     position: "absolute",

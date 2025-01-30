@@ -87,7 +87,7 @@ const RegistrationScreen = () => {
   };
 
   const goToHomeScreen = () => {
-    navigation.navigate("PostsScreen");
+    navigation.navigate("Posts");
   };
 
   return (
