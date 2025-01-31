@@ -3,12 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { StyleSheet, ActivityIndicator, View } from "react-native";
 import AuthNavigation from "./navigation/AuthNavigation";
-import UserCard from "./src/components/UserCard";
-import PostsScreen from "./src/screens/PostsScreen/PostsScreen";
-import ProfileScreen from "./src/screens/ProfileScreen/ProfileScreen";
-import PostCardItem from "./src/components/PostCardItem";
-import CreatePostsScreen from "./src/screens/CreatePostsScreen/CreatePostsScreen";
-import BottomNavigation from "./navigation/BottomNavigation";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -29,8 +23,7 @@ export default function App() {
   }
   return (
     <NavigationContainer>
-      {/* <AuthNavigation /> */}
-      <BottomNavigation />
+      <AuthNavigation />
     </NavigationContainer>
   );
 }

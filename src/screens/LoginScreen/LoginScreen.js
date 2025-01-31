@@ -74,7 +74,7 @@ const LoginScreen = () => {
   };
 
   const goToHomeScreen = () => {
-    navigation.navigate("Posts");
+    navigation.navigate("Home");
   };
 
   return (

@@ -8,18 +8,28 @@ const Button = ({
   onPress,
   buttonStyle,
   buttonStyleText,
+  disabled,
 }) => {
   return (
     <Pressable
+      disabled={disabled}
       onPress={onPress}
       style={({ pressed }) => [
         styles.button,
         pressed && styles.pressed,
         buttonStyle,
+        disabled && styles.disabledButton,
       ]}
     >
       {buttonTitle && (
-        <Text style={[styles.baseText, styles.buttonTitle, buttonStyleText]}>
+        <Text
+          style={[
+            styles.baseText,
+            styles.buttonTitle,
+            buttonStyleText,
+            disabled && styles.disabledButtonTitle,
+          ]}
+        >
           {buttonTitle}
         </Text>
       )}
@@ -52,5 +62,11 @@ const styles = StyleSheet.create({
   },
   buttonTitle: {
     color: colors.white,
+  },
+  disabledButton: {
+    backgroundColor: colors.light_gray,
+  },
+  disabledButtonTitle: {
+    color: colors.text_gray,
   },
 });

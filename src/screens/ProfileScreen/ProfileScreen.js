@@ -77,7 +77,7 @@ const ProfileScreen = () => {
       <ImageBackground source={imageBG} style={styles.imageBackground}>
         <View style={styles.container}>
           <View style={styles.wrapperContainer}>
-            <LogoutButton />
+            <LogoutButton outerStyles={styles.buttonLogout} />
             <View style={styles.imageContainer}>
               <Image
                 style={styles.imageAvatar}
@@ -190,5 +190,10 @@ const styles = StyleSheet.create({
     marginTop: 32,
     marginBottom: 43,
     gap: 16,
+  },
+  buttonLogout: {
+    marginTop: 22,
+    marginRight: 16,
+    marginLeft: "auto",
   },
 });
