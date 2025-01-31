@@ -1,4 +1,4 @@
-import { StyleSheet, View, Pressable } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { colors } from "../styles/global";
 
@@ -8,6 +8,8 @@ import ProfileScreen from "../src/screens/ProfileScreen/ProfileScreen";
 import GridIcon from "../icons/GridIcon";
 import UserIcon from "../icons/UserIcon";
 import PlusIcon from "../icons/PlusIcon";
+import LogoutButton from "../src/components/LogoutButton";
+import BackArrowLeftBotton from "../src/components/BackArrowLeftBotton";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,20 +18,22 @@ const BottomNavigation = () => {
     <Tab.Navigator
       initialRouteName="Posts"
       screenOptions={({ route }) => ({
-        headerShown: false,
+        headerStyle: {
+          backgroundColor: colors.white,
+        },
+        headerTitleAlign: "center",
+        headerTitleStyle: {
+          fontFamily: "Roboto-Medium",
+          fontWeight: "500",
+          fontSize: 17,
+          lineHeight: 22,
+          color: colors.black_primary,
+          textAlign: "center",
+        },
         tabBarLabel: "",
         tabBarStyle: {
-          width: 300,
           height: 60,
-          alignSelf: "center",
-          alignContent: "center",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "transparent",
-          borderTopWidth: 0,
-          elevation: 0,
-          shadowOpacity: 0,
-          marginTop: 9,
+          backgroundColor: colors.white,
         },
         tabBarIcon: ({ focused }) => {
           let IconComponent;
@@ -53,30 +57,33 @@ const BottomNavigation = () => {
             </View>
           );
         },
-        tabBarButton: (props) => <Pressable {...props} />,
       })}
     >
       <Tab.Screen
         name="Posts"
         component={PostsScreen}
         options={{
-          opacity: 0,
-          animationEnabled: false,
-          tabBarPressOpacity: 0,
-          tabBarPressColor: "white",
+          headerRight: () => <LogoutButton outerStyles={styles.buttonLogout} />,
+          title: "Публікації",
         }}
       />
-      <Tab.Screen name="CreatePosts" component={CreatePostsScreen} />
+      <Tab.Screen
+        name="CreatePosts"
+        component={CreatePostsScreen}
+        options={{
+          headerLeft: () => <BackArrowLeftBotton />,
+          title: "Створити публікацію",
+          tabBarStyle: {
+            display: "none",
+          },
+        }}
+      />
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
-        // options={{
-        //   tabBarStyle: {
-        //     display: "none",
-        //     headerShown: false,
-        //   },
-        // }}
-        // screenOptions={{ headerShown: false }}
+        options={{
+          headerShown: false,
+        }}
       />
     </Tab.Navigator>
   );
@@ -87,6 +94,7 @@ export default BottomNavigation;
 const styles = StyleSheet.create({
   tabContainer: {
     borderRadius: 20,
+    marginTop: 9,
   },
   activeTab: {
     backgroundColor: colors.orange,
@@ -95,5 +103,8 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingLeft: 20,
     borderRadius: 20,
+  },
+  buttonLogout: {
+    marginRight: 16,
   },
 });

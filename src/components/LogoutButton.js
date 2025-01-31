@@ -2,7 +2,7 @@ import { StyleSheet, Pressable, View } from "react-native";
 import LogoutIcon from "../../icons/LogoutIcon";
 import { useNavigation } from "@react-navigation/native";
 
-const LogoutButton = () => {
+const LogoutButton = ({ outerStyles }) => {
   const navigation = useNavigation();
 
   const onLogout = () => {
@@ -14,7 +14,7 @@ const LogoutButton = () => {
       accessible={true}
       accessibilityLabel="Logout"
       onPress={onLogout}
-      style={({ pressed }) => [styles.buttonLogout, pressed && styles.pressed]}
+      style={({ pressed }) => [pressed && styles.pressed, outerStyles]}
     >
       <View>
         <LogoutIcon width="24" height="24" />
@@ -26,11 +26,6 @@ const LogoutButton = () => {
 export default LogoutButton;
 
 const styles = StyleSheet.create({
-  buttonLogout: {
-    marginLeft: "auto",
-    marginTop: 22,
-    marginRight: 16,
-  },
   pressed: {
     opacity: 0.6,
   },

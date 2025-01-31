@@ -26,6 +26,8 @@ const CreatePostsScreen = () => {
     pictureUri: "",
   });
 
+  const isButtonDisabled = !post.title.trim() || !post.location.trim();
+
   const handleInputChange = (name, value) => {
     setPost((prevUser) => ({
       ...prevUser,
@@ -92,7 +94,11 @@ const CreatePostsScreen = () => {
           >
             <MapPinIcon style={styles.iconLoation} width="24" height="24" />
           </InputCreatePost>
-          <Button onPress={handleSubmit} buttonTitle="Опубліковати" />
+          <Button
+            onPress={handleSubmit}
+            buttonTitle="Опубліковати"
+            disabled={isButtonDisabled}
+          />
         </View>
         <Pressable
           accessible={true}
