@@ -5,9 +5,9 @@ const HomeButton = () => {
   return (
     <View style={styles.container}>
       <GridIcon
-      // name="Home"
-      // size={24}
-      // color={focused ? colors.orange : colors.black_primary}
+        name="Home"
+        size={24}
+        color={focused ? colors.orange : colors.black_primary}
       />
     </View>
   );
