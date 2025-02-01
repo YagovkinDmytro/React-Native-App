@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { StyleSheet, ActivityIndicator, View } from "react-native";
 import AuthNavigation from "./navigation/AuthNavigation";
+import CommentsScreen from "./src/screens/CommentsScreen/CommentsScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({

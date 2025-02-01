@@ -9,7 +9,7 @@ import GridIcon from "../icons/GridIcon";
 import UserIcon from "../icons/UserIcon";
 import PlusIcon from "../icons/PlusIcon";
 import LogoutButton from "../src/components/LogoutButton";
-import BackArrowLeftBotton from "../src/components/BackArrowLeftBotton";
+import BackArrowLeftBotton from "../src/components/BackArrowLeftButton";
 
 const Tab = createBottomTabNavigator();
 
