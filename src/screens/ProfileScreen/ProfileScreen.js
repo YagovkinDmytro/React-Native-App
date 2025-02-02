@@ -17,33 +17,6 @@ import CircleDelete from "../../../icons/CircleDelete.js";
 import { useNavigation } from "@react-navigation/native";
 import LogoutButton from "../../components/LogoutButton.js";
 
-const dataProfile = [
-  {
-    id: 1,
-    title: "Ліс",
-    messages: 8,
-    like: 153,
-    location: "Ukraine",
-    picture: require("../../../assets/images/Forest.png"),
-  },
-  {
-    id: 2,
-    title: "Захід на Чорному морі",
-    messages: 3,
-    like: 200,
-    location: "Ukraine",
-    picture: require("../../../assets/images/Sunset.png"),
-  },
-  {
-    id: 3,
-    title: "Старий будиночок у Венеції",
-    messages: 50,
-    like: 200,
-    location: "Italy",
-    picture: require("../../../assets/images/House.png"),
-  },
-];
-
 const ProfileScreen = () => {
   const imageBG = require("../../../assets/images/Photo_BG.jpg");
   const noImageAvatar = require("../../../assets/images/noImageAvatar.png");
@@ -104,7 +77,7 @@ const ProfileScreen = () => {
               keyboardShouldPersistTaps="handled"
               showsVerticalScrollIndicator={false}
             >
-              <PostCardItem screen={user.screen} data={dataProfile} />
+              <PostCardItem screen={user.screen} />
             </ScrollView>
           </View>
         </View>

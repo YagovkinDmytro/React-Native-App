@@ -6,7 +6,7 @@ const BackArrowLeftBotton = () => {
   const navigation = useNavigation();
 
   const onBack = () => {
-    navigation.navigate("Posts");
+    navigation.goBack();
   };
 
   return (
