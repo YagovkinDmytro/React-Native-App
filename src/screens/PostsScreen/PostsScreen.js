@@ -9,30 +9,6 @@ import UserCard from "../../components/UserCard";
 import PostCardItem from "../../components/PostCardItem";
 import { colors } from "../../../styles/global";
 
-const dataPosts = [
-  {
-    id: 1,
-    title: "Ліс",
-    messages: 0,
-    location: "Ivano-Frankivs'k Region, Ukraine",
-    picture: require("../../../assets/images/Forest.png"),
-  },
-  {
-    id: 2,
-    title: "Захід на Чорному морі",
-    messages: 0,
-    location: "Odessa, Ukraine",
-    picture: require("../../../assets/images/Sunset.png"),
-  },
-  {
-    id: 3,
-    title: "Старий будиночок у Венеції",
-    messages: 0,
-    location: "Venezia, Italy",
-    picture: require("../../../assets/images/House.png"),
-  },
-];
-
 const PostsScreen = () => {
   return (
     <SafeAreaView
@@ -50,7 +26,7 @@ const PostsScreen = () => {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
         >
-          <PostCardItem data={dataPosts} />
+          <PostCardItem />
         </ScrollView>
       </View>
     </SafeAreaView>

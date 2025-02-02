@@ -3,13 +3,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { colors } from "../styles/global";
 
 import PostsScreen from "../src/screens/PostsScreen/PostsScreen";
-import CreatePostsScreen from "../src/screens/CreatePostsScreen/CreatePostsScreen";
 import ProfileScreen from "../src/screens/ProfileScreen/ProfileScreen";
 import GridIcon from "../icons/GridIcon";
 import UserIcon from "../icons/UserIcon";
 import PlusIcon from "../icons/PlusIcon";
 import LogoutButton from "../src/components/LogoutButton";
 import BackArrowLeftBotton from "../src/components/BackArrowLeftButton";
+import CreatePostNavigator from "./CreatePostNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -45,7 +45,7 @@ const BottomNavigation = () => {
 
           if (route.name === "Posts") {
             IconComponent = GridIcon;
-          } else if (route.name === "CreatePosts") {
+          } else if (route.name === "CreatePostNavigator") {
             IconComponent = PlusIcon;
           } else if (route.name === "Profile") {
             IconComponent = UserIcon;
@@ -68,8 +68,8 @@ const BottomNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="CreatePosts"
-        component={CreatePostsScreen}
+        name="CreatePostNavigator"
+        component={CreatePostNavigator}
         options={{
           headerLeft: () => <BackArrowLeftBotton />,
           title: "Створити публікацію",

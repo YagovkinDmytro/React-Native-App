@@ -1,55 +1,94 @@
-import { Image, View, Text, StyleSheet, ImageBackground } from "react-native";
+import { Image, View, Text, StyleSheet, Pressable } from "react-native";
 import MessageIcon from "../../icons/MessageIcon";
 import MapPinIcon from "../../icons/MapPinIcon";
 import ThumbsUp from "../../icons/ThumbsUp";
 import { colors } from "../../styles/global";
+import { useNavigation } from "@react-navigation/native";
+import userData from "../../assets/data/userData";
 
-const PostCardItem = ({ screen, data }) => {
-  return data.map(({ id, title, messages, location, picture, like }) => {
-    return (
-      <View style={styles.container} key={id}>
-        <View>
-          <Image style={styles.img} source={picture} />
-        </View>
-        <Text style={styles.title}>{title}</Text>
-        <View style={styles.containerInfo}>
-          <View style={styles.containerInfoGroup}>
-            <View style={styles.containerMessage}>
-              <MessageIcon
-                width="24"
-                height="24"
-                fill={screen === "Home" ? colors.orange : "none"}
-                stroke={screen === "Home" ? "none" : colors.text_gray}
-              />
-              <Text
-                style={[
-                  styles.messageText,
-                  {
-                    color:
-                      screen === "Home"
-                        ? colors.black_primary
-                        : colors.text_gray,
-                  },
-                ]}
+const PostCardItem = ({ screen }) => {
+  const navigation = useNavigation();
+
+  const goToMap = (coordinates) => {
+    navigation.navigate("Map", { coordinates });
+  };
+
+  const goToMessage = () => {
+    navigation.navigate("Comments");
+  };
+
+  return userData.map(
+    ({
+      id,
+      title,
+      messages,
+      fullLocation,
+      countryLocation,
+      picture,
+      like,
+      coordinates,
+    }) => {
+      return (
+        <View style={styles.container} key={id}>
+          <View>
+            <Image style={styles.img} source={picture} />
+          </View>
+          <Text style={styles.title}>{title}</Text>
+          <View style={styles.containerInfo}>
+            <View style={styles.containerInfoGroup}>
+              <Pressable
+                accessible={true}
+                accessibilityLabel="Go to Map"
+                onPress={goToMessage}
+                style={({ pressed }) => pressed && styles.pressed}
               >
-                {messages}
-              </Text>
+                <View style={styles.containerMessage}>
+                  <MessageIcon
+                    width="24"
+                    height="24"
+                    fill={screen === "Home" ? colors.orange : "none"}
+                    stroke={screen === "Home" ? "none" : colors.text_gray}
+                  />
+                  <Text
+                    style={[
+                      styles.messageText,
+                      {
+                        color:
+                          screen === "Home"
+                            ? colors.black_primary
+                            : colors.text_gray,
+                      },
+                    ]}
+                  >
+                    {messages}
+                  </Text>
+                </View>
+              </Pressable>
+              {screen && (
+                <View style={styles.containerThumbsUp}>
+                  <ThumbsUp width="24" height="24" />
+                  <Text style={styles.thumbsUpText}>{like}</Text>
+                </View>
+              )}
             </View>
-            {screen && (
-              <View style={styles.containerThumbsUp}>
-                <ThumbsUp width="24" height="24" />
-                <Text style={styles.thumbsUpText}>{like}</Text>
+            <Pressable
+              accessible={true}
+              accessibilityLabel="Go to Map"
+              onPress={() => goToMap(coordinates)}
+              style={({ pressed }) => pressed && styles.pressed}
+            >
+              <View style={styles.containerLocation}>
+                <MapPinIcon width="24" height="24" />
+                <Text style={styles.locationText}>
+                  {screen === "Home" ? countryLocation : fullLocation}
+                </Text>
               </View>
-            )}
-          </View>
-          <View style={styles.containerLocation}>
-            <MapPinIcon width="24" height="24" />
-            <Text style={styles.locationText}>{location}</Text>
+            </Pressable>
           </View>
         </View>
-      </View>
-    );
-  });
+      );
+    }
+  );
 };
 
 export default PostCardItem;
@@ -113,5 +152,8 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     lineHeight: 19,
     color: colors.black_primary,
+  },
+  pressed: {
+    opacity: 0.6,
   },
 });
