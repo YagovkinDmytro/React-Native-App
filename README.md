@@ -22,3 +22,11 @@ Step 3 "Navigation"
 - Customize transitions between screens.
 - Add bottom navigation using createBottomTabNavigator.
 - Style navigation to improve user experience.
+
+Step 4 "Native components"
+
+- Integrate native components such as a camera into your application.
+- Process images taken with the camera.
+- Add and store text information along with photos.
+- Use geolocation to determine location.
+- Customize screen transitions based on functionality related to photos and geolocation.
