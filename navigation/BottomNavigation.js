@@ -71,8 +71,8 @@ const BottomNavigation = () => {
         name="CreatePostNavigator"
         component={CreatePostNavigator}
         options={{
+          headerShown: false,
           headerLeft: () => <BackArrowLeftBotton />,
-          title: "Створити публікацію",
           tabBarStyle: {
             display: "none",
           },

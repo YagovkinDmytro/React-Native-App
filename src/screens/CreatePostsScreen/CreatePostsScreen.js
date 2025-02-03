@@ -8,7 +8,6 @@ import {
   Pressable,
   Alert,
 } from "react-native";
-
 import Button from "../../components/Button";
 import { colors } from "../../../styles/global";
 import InputCreatePost from "../../components/InputCreatePost";
@@ -16,36 +15,64 @@ import { useState } from "react";
 import MapPinIcon from "../../../icons/MapPinIcon";
 import TrashIcon from "../../../icons/TrashIcon";
 import CameraIcon from "../../../icons/CameraIcon";
+import { useNavigation } from "@react-navigation/native";
+import * as Location from "expo-location";
 
 const CreatePostsScreen = () => {
+  const navigation = useNavigation();
+
   const picture = require("../../../assets/images/noImagePicture.png");
 
   const [post, setPost] = useState({
     title: "",
-    location: "",
+    nameLocation: "",
     pictureUri: "",
+    currentLocation: null,
+    errorMsg: null,
   });
 
-  const isButtonDisabled = !post.title.trim() || !post.location.trim();
+  const isButtonDisabled = !post.title.trim() || !post.nameLocation.trim();
 
-  const handleInputChange = (name, value) => {
+  const handlePostChange = (name, value) => {
     setPost((prevUser) => ({
       ...prevUser,
       [name]: value,
     }));
   };
 
-  const handleSubmit = () => {
-    const userPost = { title: post.title, location: post.location };
-    console.log("User Post:", userPost);
+  const navigateToCameraScreen = () => {
+    navigation.navigate("CameraScreen");
   };
 
-  const handleAddPicture = () => {
-    Alert.alert("Add New Picture", "Choose whatever you want to load", [
-      { text: "Maybe", onPress: () => console.log("Maybe pressed") },
-      { text: "No", onPress: () => console.log("No pressed") },
-      { text: "Yes", onPress: () => console.log("Yes pressed") },
-    ]);
+  const getCurrentLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+
+    if (status !== "granted") {
+      handlePostChange("errorMsg", "Permission to access location was denied");
+      Alert.alert("Permission", post.errorMsg, [
+        { text: "Ok", onPress: () => console.log("Ok") },
+      ]);
+      return;
+    }
+
+    let coordinates = await Location.getCurrentPositionAsync({});
+    return coordinates;
+  };
+
+  const handleSubmit = async () => {
+    const coordinates = await getCurrentLocation();
+    handlePostChange("currentLocation", coordinates);
+    navigation.navigate("Posts");
+
+    const userPost = {
+      title: post.title,
+      nameLocation: post.nameLocation,
+      currentLocation: post.currentLocation,
+    };
+    console.log("User Post:", userPost);
+
+    handlePostChange("title", "");
+    handlePostChange("nameLocation", "");
   };
 
   const handleDeletePost = () => {
@@ -70,8 +97,8 @@ const CreatePostsScreen = () => {
             <Image style={styles.img} source={picture} />
             <Pressable
               accessible={true}
-              accessibilityLabel="Add Picture"
-              onPress={handleAddPicture}
+              accessibilityLabel="Take a photo"
+              onPress={navigateToCameraScreen}
               style={({ pressed }) => [
                 styles.containerCameraIcon,
                 pressed && styles.pressed,
@@ -84,12 +111,12 @@ const CreatePostsScreen = () => {
           <InputCreatePost
             value={post.title}
             placeholder="Назва..."
-            onChangeText={(value) => handleInputChange("title", value)}
+            onChangeText={(value) => handlePostChange("title", value)}
           />
           <InputCreatePost
-            value={post.location}
+            value={post.nameLocation}
             placeholder="Місцевість..."
-            onChangeText={(value) => handleInputChange("location", value)}
+            onChangeText={(value) => handlePostChange("nameLocation", value)}
             outerStyles={{ paddingLeft: 28 }}
           >
             <MapPinIcon style={styles.iconLoation} width="24" height="24" />
