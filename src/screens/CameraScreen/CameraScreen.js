@@ -40,7 +40,7 @@ const CameraScreen = ({ navigation }) => {
 
     const image = await camera?.current?.takePictureAsync();
     await MediaLibrary.saveToLibraryAsync(image.uri);
-    navigation.replace("CreatePost", { photo: image.uri });
+    navigation.replace("CreatePostsScreen", { photo: image.uri });
   };
 
   return (
@@ -50,7 +50,6 @@ const CameraScreen = ({ navigation }) => {
           <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
             <Text style={styles.text}>Flip Camera</Text>
           </TouchableOpacity>
-
           <TouchableOpacity style={styles.button} onPress={takePhoto}>
             <Text style={styles.text}>Take Photo</Text>
           </TouchableOpacity>

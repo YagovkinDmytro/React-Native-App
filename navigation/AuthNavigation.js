@@ -27,7 +27,7 @@ const AuthNavigation = () => {
           textAlign: "center",
         },
       }}
-      initialRouteName="Home"
+      initialRouteName="Login"
     >
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Registration" component={RegistrationScreen} />

@@ -7,19 +7,25 @@ import {
   Text,
   Pressable,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
 } from "react-native";
 import Button from "../../components/Button";
 import { colors } from "../../../styles/global";
 import InputCreatePost from "../../components/InputCreatePost";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MapPinIcon from "../../../icons/MapPinIcon";
 import TrashIcon from "../../../icons/TrashIcon";
 import CameraIcon from "../../../icons/CameraIcon";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import * as Location from "expo-location";
 
 const CreatePostsScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const params = route?.params;
 
   const picture = require("../../../assets/images/noImagePicture.png");
 
@@ -29,6 +35,7 @@ const CreatePostsScreen = () => {
     pictureUri: "",
     currentLocation: null,
     errorMsg: null,
+    photo: null,
   });
 
   const isButtonDisabled = !post.title.trim() || !post.nameLocation.trim();
@@ -44,35 +51,48 @@ const CreatePostsScreen = () => {
     navigation.navigate("CameraScreen");
   };
 
-  const getCurrentLocation = async () => {
-    let { status } = await Location.requestForegroundPermissionsAsync();
+  useEffect(() => {
+    if (!params?.photo) return;
 
-    if (status !== "granted") {
-      handlePostChange("errorMsg", "Permission to access location was denied");
-      Alert.alert("Permission", post.errorMsg, [
-        { text: "Ok", onPress: () => console.log("Ok") },
-      ]);
-      return;
-    }
+    handlePostChange("photo", params.photo);
 
-    let coordinates = await Location.getCurrentPositionAsync({});
-    return coordinates;
-  };
+    const getCurrentLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
 
-  const handleSubmit = async () => {
-    const coordinates = await getCurrentLocation();
-    handlePostChange("currentLocation", coordinates);
+      if (status !== "granted") {
+        handlePostChange(
+          "errorMsg",
+          "Permission to access location was denied"
+        );
+        Alert.alert("Permission", "Permission to access location was denied", [
+          {
+            text: "Ok",
+            onPress: () =>
+              console.log("Permission to access location was denied"),
+          },
+        ]);
+        return;
+      }
+
+      let coordinates = await Location.getCurrentPositionAsync({});
+      handlePostChange("currentLocation", coordinates);
+    };
+
+    getCurrentLocation();
+  }, [params]);
+
+  const handleSubmit = () => {
     navigation.navigate("Posts");
 
+    handlePostChange("title", "");
+    handlePostChange("nameLocation", "");
+    handlePostChange("photo", null);
     const userPost = {
       title: post.title,
       nameLocation: post.nameLocation,
       currentLocation: post.currentLocation,
     };
     console.log("User Post:", userPost);
-
-    handlePostChange("title", "");
-    handlePostChange("nameLocation", "");
   };
 
   const handleDeletePost = () => {
@@ -91,54 +111,65 @@ const CreatePostsScreen = () => {
       }}
     >
       <StatusBar style="auto" />
-      <View style={styles.container}>
-        <View style={styles.containerGroup}>
-          <View style={styles.containerImage}>
-            <Image style={styles.img} source={picture} />
-            <Pressable
-              accessible={true}
-              accessibilityLabel="Take a photo"
-              onPress={navigateToCameraScreen}
-              style={({ pressed }) => [
-                styles.containerCameraIcon,
-                pressed && styles.pressed,
-              ]}
-            >
-              <CameraIcon width={24} height={24} />
-            </Pressable>
-            <Text style={styles.imgDescription}>Завантажте фото</Text>
-          </View>
-          <InputCreatePost
-            value={post.title}
-            placeholder="Назва..."
-            onChangeText={(value) => handlePostChange("title", value)}
-          />
-          <InputCreatePost
-            value={post.nameLocation}
-            placeholder="Місцевість..."
-            onChangeText={(value) => handlePostChange("nameLocation", value)}
-            outerStyles={{ paddingLeft: 28 }}
+      <Pressable style={{ flex: 1 }} onPress={() => Keyboard.dismiss()}>
+        <View style={styles.container}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
           >
-            <MapPinIcon style={styles.iconLoation} width="24" height="24" />
-          </InputCreatePost>
-          <Button
-            onPress={handleSubmit}
-            buttonTitle="Опубліковати"
-            disabled={isButtonDisabled}
-          />
+            <View style={styles.containerGroup}>
+              <View style={styles.containerImage}>
+                <Image
+                  style={styles.img}
+                  source={post.photo ? { uri: post.photo } : picture}
+                />
+                <Pressable
+                  accessible={true}
+                  accessibilityLabel="Take a photo"
+                  onPress={navigateToCameraScreen}
+                  style={({ pressed }) => [
+                    styles.containerCameraIcon,
+                    pressed && styles.pressed,
+                  ]}
+                >
+                  <CameraIcon width={24} height={24} />
+                </Pressable>
+                <Text style={styles.imgDescription}>Завантажте фото</Text>
+              </View>
+              <InputCreatePost
+                value={post.title}
+                placeholder="Назва..."
+                onChangeText={(value) => handlePostChange("title", value)}
+              />
+              <InputCreatePost
+                value={post.nameLocation}
+                placeholder="Місцевість..."
+                onChangeText={(value) =>
+                  handlePostChange("nameLocation", value)
+                }
+                outerStyles={{ paddingLeft: 28 }}
+              >
+                <MapPinIcon style={styles.iconLoation} width="24" height="24" />
+              </InputCreatePost>
+              <Button
+                onPress={handleSubmit}
+                buttonTitle="Опубліковати"
+                disabled={isButtonDisabled}
+              />
+            </View>
+          </KeyboardAvoidingView>
+          <Pressable
+            accessible={true}
+            accessibilityLabel="Delete Post"
+            onPress={handleDeletePost}
+            style={({ pressed }) => [
+              styles.containerTrashIcon,
+              pressed && styles.pressed,
+            ]}
+          >
+            <TrashIcon width={24} height={24} />
+          </Pressable>
         </View>
-        <Pressable
-          accessible={true}
-          accessibilityLabel="Delete Post"
-          onPress={handleDeletePost}
-          style={({ pressed }) => [
-            styles.containerTrashIcon,
-            pressed && styles.pressed,
-          ]}
-        >
-          <TrashIcon width={24} height={24} />
-        </Pressable>
-      </View>
+      </Pressable>
     </SafeAreaView>
   );
 };
