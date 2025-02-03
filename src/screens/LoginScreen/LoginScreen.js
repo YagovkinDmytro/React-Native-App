@@ -48,7 +48,7 @@ const LoginScreen = () => {
     }));
   };
 
-  const handleSubmit = () => {
+  const onLogin = () => {
     if (!user.email.trim() || !user.password.trim()) {
       Alert.alert("Error", "All fields are required!");
       return;
@@ -105,7 +105,7 @@ const LoginScreen = () => {
                   />
                 </Input>
               </View>
-              <Button onPress={handleSubmit} buttonTitle="Увійти" />
+              <Button onPress={onLogin} buttonTitle="Увійти" />
               <View style={styles.buttonSignInContainer}>
                 <Text style={[styles.baseText, styles.buttonText]}>
                   Немає акаунту?

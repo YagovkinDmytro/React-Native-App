@@ -1,11 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import RegistrationScreen from "../src/screens/RegistrationScreen/RegistrationScreen";
-import LoginScreen from "../src/screens/LoginScreen/LoginScreen";
-import BottomNavigation from "../navigation/BottomNavigation";
-import MapScreenLocation from "../src/screens/MapScreenLocation/MapScreenLocation";
-import CommentsScreen from "../src/screens/CommentsScreen/CommentsScreen";
-import BackArrowLeftBotton from "../src/components/BackArrowLeftButton";
-import { colors } from "../styles/global";
+import RegistrationScreen from "../screens/RegistrationScreen/RegistrationScreen";
+import LoginScreen from "../screens/LoginScreen/LoginScreen";
+import BottomNavigation from "./BottomNavigation";
+import MapScreenLocation from "../screens/MapScreenLocation/MapScreenLocation";
+import CommentsScreen from "../screens/CommentsScreen/CommentsScreen";
+import BackArrowLeftBotton from "../components/BackArrowLeftButton";
+import { colors } from "../../styles/global";
 
 const Stack = createStackNavigator();
 
@@ -31,7 +31,7 @@ const AuthNavigation = () => {
     >
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Registration" component={RegistrationScreen} />
-      <Stack.Screen name="Home" component={BottomNavigation} />
+      {/* <Stack.Screen name="Home" component={BottomNavigation} />
       <Stack.Screen
         name="Map"
         component={MapScreenLocation}
@@ -55,7 +55,7 @@ const AuthNavigation = () => {
             display: "none",
           },
         }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };

@@ -2,8 +2,11 @@ import React, { useState, useRef } from "react";
 import { Text, View, TouchableOpacity, StyleSheet, Button } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
+import { useNavigation } from "@react-navigation/native";
 
-const CameraScreen = ({ navigation }) => {
+const CameraScreen = () => {
+  const navigation = useNavigation();
+
   const [facing, setFacing] = useState("back");
   const [cameraPermission, requestCameraPermission] = useCameraPermissions();
   const [libraryPermission, requestLibraryPermission] =
