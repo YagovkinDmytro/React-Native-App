@@ -47,45 +47,52 @@ const CreatePostsScreen = () => {
     }));
   };
 
-  useEffect(() => {
-    if (!params?.photo) return;
-
-    handlePostChange("photo", params.photo);
-  }, [params]);
-
   const navigateToCameraScreen = () => {
     navigation.navigate("CameraScreen");
   };
 
-  const getCurrentLocation = async () => {
-    let { status } = await Location.requestForegroundPermissionsAsync();
+  useEffect(() => {
+    if (!params?.photo) return;
 
-    if (status !== "granted") {
-      handlePostChange("errorMsg", "Permission to access location was denied");
-      Alert.alert("Permission", post.errorMsg, [
-        { text: "Ok", onPress: () => console.log("Ok") },
-      ]);
-      return;
-    }
+    handlePostChange("photo", params.photo);
 
-    let coordinates = await Location.getCurrentPositionAsync({});
-    return coordinates;
-  };
+    const getCurrentLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
 
-  const handleSubmit = async () => {
-    const coordinates = await getCurrentLocation();
-    handlePostChange("currentLocation", coordinates);
+      if (status !== "granted") {
+        handlePostChange(
+          "errorMsg",
+          "Permission to access location was denied"
+        );
+        Alert.alert("Permission", "Permission to access location was denied", [
+          {
+            text: "Ok",
+            onPress: () =>
+              console.log("Permission to access location was denied"),
+          },
+        ]);
+        return;
+      }
+
+      let coordinates = await Location.getCurrentPositionAsync({});
+      handlePostChange("currentLocation", coordinates);
+    };
+
+    getCurrentLocation();
+  }, [params]);
+
+  const handleSubmit = () => {
     navigation.navigate("Posts");
 
+    handlePostChange("title", "");
+    handlePostChange("nameLocation", "");
+    handlePostChange("photo", null);
     const userPost = {
       title: post.title,
       nameLocation: post.nameLocation,
       currentLocation: post.currentLocation,
     };
     console.log("User Post:", userPost);
-
-    handlePostChange("title", "");
-    handlePostChange("nameLocation", "");
   };
 
   const handleDeletePost = () => {

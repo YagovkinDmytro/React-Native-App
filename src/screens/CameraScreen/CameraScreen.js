@@ -40,7 +40,7 @@ const CameraScreen = ({ navigation }) => {
 
     const image = await camera?.current?.takePictureAsync();
     await MediaLibrary.saveToLibraryAsync(image.uri);
-    navigation.navigate("CreatePostsScreen", { photo: image.uri });
+    navigation.replace("CreatePostsScreen", { photo: image.uri });
   };
 
   return (
