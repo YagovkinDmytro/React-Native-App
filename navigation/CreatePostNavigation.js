@@ -6,7 +6,7 @@ import { colors } from "../styles/global";
 
 const Stack = createStackNavigator();
 
-const CreatePostNavigator = () => {
+const CreatePostNavigation = () => {
   return (
     <Stack.Navigator
       initialRouteName="CreatePostsScreen"
@@ -45,4 +45,4 @@ const CreatePostNavigator = () => {
   );
 };
 
-export default CreatePostNavigator;
+export default CreatePostNavigation;

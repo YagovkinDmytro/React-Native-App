@@ -9,7 +9,7 @@ import UserIcon from "../icons/UserIcon";
 import PlusIcon from "../icons/PlusIcon";
 import LogoutButton from "../src/components/LogoutButton";
 import BackArrowLeftBotton from "../src/components/BackArrowLeftButton";
-import CreatePostNavigator from "./CreatePostNavigator";
+import CreatePostNavigation from "./CreatePostNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -45,7 +45,7 @@ const BottomNavigation = () => {
 
           if (route.name === "Posts") {
             IconComponent = GridIcon;
-          } else if (route.name === "CreatePostNavigator") {
+          } else if (route.name === "CreatePostNavigation") {
             IconComponent = PlusIcon;
           } else if (route.name === "Profile") {
             IconComponent = UserIcon;
@@ -68,8 +68,8 @@ const BottomNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="CreatePostNavigator"
-        component={CreatePostNavigator}
+        name="CreatePostNavigation"
+        component={CreatePostNavigation}
         options={{
           headerShown: false,
           headerLeft: () => <BackArrowLeftBotton />,
