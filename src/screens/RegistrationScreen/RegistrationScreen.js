@@ -16,10 +16,10 @@ import {
 import styles from "./RegistrationStylesScreen.js";
 import ShowPasswordButton from "../../components/ShowPasswordButton.js";
 import Input from "../../components/Input.js";
-
 import CirclePlusSvg from "../../../icons/CirclePlusSvg.js";
 import Button from "../../components/Button.js";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { registerDB } from "../../utils/auth.js";
 
 const RegistrationScreen = () => {
   const imageBG = require("../../../assets/images/Photo_BG.jpg");
@@ -53,7 +53,7 @@ const RegistrationScreen = () => {
     }));
   };
 
-  const handleSubmit = () => {
+  const onSignUp = () => {
     if (!user.login.trim() || !user.email.trim() || !user.password.trim()) {
       Alert.alert("Error", "All fields are required!");
       return;
@@ -66,9 +66,13 @@ const RegistrationScreen = () => {
       Alert.alert("Error", "Password must be at least 6 characters long!");
       return;
     }
-    const userInfo = { login: user.login, email: user.email };
+    const userInfo = {
+      login: user.login,
+      email: user.email,
+      password: user.password,
+    };
     console.log("User Info:", userInfo);
-    goToHomeScreen();
+    registerDB(userInfo);
   };
 
   const handleAddAvatar = () => {
@@ -84,10 +88,6 @@ const RegistrationScreen = () => {
       email: user.email,
       password: user.password,
     });
-  };
-
-  const goToHomeScreen = () => {
-    navigation.navigate("Home");
   };
 
   return (
@@ -144,7 +144,7 @@ const RegistrationScreen = () => {
                   />
                 </Input>
               </View>
-              <Button onPress={handleSubmit} buttonTitle="Зареєстуватися" />
+              <Button onPress={onSignUp} buttonTitle="Зареєстуватися" />
               <View style={styles.buttonSignInContainer}>
                 <Text style={[styles.baseText, styles.buttonText]}>
                   Вже є акаунт?
