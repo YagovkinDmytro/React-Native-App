@@ -14,14 +14,16 @@ import {
 import { colors } from "../../../styles/global.js";
 import PostCardItem from "../../components/PostCardItem.js";
 import CircleDelete from "../../../icons/CircleDelete.js";
-import { useNavigation } from "@react-navigation/native";
 import LogoutButton from "../../components/LogoutButton.js";
+import { useSelector } from "react-redux";
 
 const ProfileScreen = () => {
   const imageBG = require("../../../assets/images/Photo_BG.jpg");
   const noImageAvatar = require("../../../assets/images/noImageAvatar.png");
 
-  const navigation = useNavigation();
+  const { displayName, profilePhoto } = useSelector(
+    (state) => state.user.userInfo
+  );
 
   const [user, setUser] = useState({
     avatarUri:
@@ -54,9 +56,7 @@ const ProfileScreen = () => {
             <View style={styles.imageContainer}>
               <Image
                 style={styles.imageAvatar}
-                source={
-                  user.avatarUri ? { uri: user.avatarUri } : noImageAvatar
-                }
+                source={profilePhoto ? { uri: profilePhoto } : noImageAvatar}
               ></Image>
               <Pressable
                 accessible={true}
@@ -72,7 +72,7 @@ const ProfileScreen = () => {
                 </View>
               </Pressable>
             </View>
-            <Text style={styles.textTitle}>Donald Duck</Text>
+            <Text style={styles.textTitle}>{displayName}</Text>
             <ScrollView
               keyboardShouldPersistTaps="handled"
               showsVerticalScrollIndicator={false}

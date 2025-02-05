@@ -79,7 +79,7 @@ const CreatePostsScreen = () => {
     };
 
     getCurrentLocation();
-  }, [params]);
+  }, [params?.photo]);
 
   const handleSubmit = () => {
     navigation.navigate("Posts");
@@ -87,11 +87,13 @@ const CreatePostsScreen = () => {
     handlePostChange("title", "");
     handlePostChange("nameLocation", "");
     handlePostChange("photo", null);
+
     const userPost = {
       title: post.title,
       nameLocation: post.nameLocation,
       currentLocation: post.currentLocation,
     };
+
     console.log("User Post:", userPost);
   };
 

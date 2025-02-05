@@ -18,11 +18,14 @@ import Input from "../../components/Input.js";
 
 import Button from "../../components/Button.js";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { loginDB } from "../../utils/auth.js";
+import { useDispatch } from "react-redux";
 
 const LoginScreen = () => {
   const imageBG = require("../../../assets/images/Photo_BG.jpg");
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const { params } = useRoute();
   const email = params?.email || "";
@@ -48,7 +51,7 @@ const LoginScreen = () => {
     }));
   };
 
-  const handleSubmit = () => {
+  const onLogin = () => {
     if (!user.email.trim() || !user.password.trim()) {
       Alert.alert("Error", "All fields are required!");
       return;
@@ -61,9 +64,9 @@ const LoginScreen = () => {
       Alert.alert("Error", "Password must be at least 6 characters long!");
       return;
     }
-    const userInfo = { email: user.email };
+    const userInfo = { email: user.email, password: user.password };
     console.log("User Info:", userInfo);
-    goToHomeScreen();
+    loginDB(userInfo, dispatch);
   };
 
   const onSignUp = () => {
@@ -71,10 +74,6 @@ const LoginScreen = () => {
       email: user.email,
       password: user.password,
     });
-  };
-
-  const goToHomeScreen = () => {
-    navigation.navigate("Home");
   };
 
   return (
@@ -105,7 +104,7 @@ const LoginScreen = () => {
                   />
                 </Input>
               </View>
-              <Button onPress={handleSubmit} buttonTitle="Увійти" />
+              <Button onPress={onLogin} buttonTitle="Увійти" />
               <View style={styles.buttonSignInContainer}>
                 <Text style={[styles.baseText, styles.buttonText]}>
                   Немає акаунту?

@@ -1,14 +1,14 @@
 import { StyleSheet, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { colors } from "../styles/global";
+import { colors } from "../../styles/global";
 
-import PostsScreen from "../src/screens/PostsScreen/PostsScreen";
-import ProfileScreen from "../src/screens/ProfileScreen/ProfileScreen";
-import GridIcon from "../icons/GridIcon";
-import UserIcon from "../icons/UserIcon";
-import PlusIcon from "../icons/PlusIcon";
-import LogoutButton from "../src/components/LogoutButton";
-import BackArrowLeftBotton from "../src/components/BackArrowLeftButton";
+import PostsScreen from "../screens/PostsScreen/PostsScreen";
+import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
+import GridIcon from "../../icons/GridIcon";
+import UserIcon from "../../icons/UserIcon";
+import PlusIcon from "../../icons/PlusIcon";
+import LogoutButton from "../components/LogoutButton";
+import BackArrowLeftBotton from "../components/BackArrowLeftButton";
 import CreatePostNavigation from "./CreatePostNavigation";
 
 const Tab = createBottomTabNavigator();

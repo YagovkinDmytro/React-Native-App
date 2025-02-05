@@ -1,8 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import CreatePostsScreen from "../src/screens/CreatePostsScreen/CreatePostsScreen";
-import BackArrowLeftBotton from "../src/components/BackArrowLeftButton";
-import CameraScreen from "../src/screens/CameraScreen/CameraScreen";
-import { colors } from "../styles/global";
+import CreatePostsScreen from "../screens/CreatePostsScreen/CreatePostsScreen";
+import BackArrowLeftBotton from "../components/BackArrowLeftButton";
+import CameraScreen from "../screens/CameraScreen/CameraScreen";
+import { colors } from "../../styles/global";
 
 const Stack = createStackNavigator();
 

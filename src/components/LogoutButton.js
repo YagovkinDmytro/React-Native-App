@@ -1,12 +1,13 @@
 import { StyleSheet, Pressable, View } from "react-native";
 import LogoutIcon from "../../icons/LogoutIcon";
-import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { logoutDB } from "../utils/auth";
 
 const LogoutButton = ({ outerStyles }) => {
-  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const onLogout = () => {
-    navigation.navigate("Login");
+    logoutDB(dispatch);
   };
 
   return (

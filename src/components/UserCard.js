@@ -1,7 +1,12 @@
 import { StyleSheet, View, Image, Text } from "react-native";
 import { colors } from "../../styles/global";
+import { useSelector } from "react-redux";
 
 const UserCard = () => {
+  const { email, displayName, profilePhoto } = useSelector(
+    (state) => state.user.userInfo
+  );
+
   const avatarUri = {
     uri: "https://cdn.pixabay.com/photo/2018/11/07/13/24/wild-duck-3800387_1280.jpg",
   };
@@ -11,11 +16,11 @@ const UserCard = () => {
     <View style={styles.cardContainer}>
       <Image
         style={styles.imageAvatar}
-        source={avatarUri ? avatarUri : noImageAvatar}
+        source={profilePhoto ? profilePhoto : noImageAvatar}
       ></Image>
       <View>
-        <Text style={styles.textName}>Donald Duck</Text>
-        <Text style={styles.textEmail}>DonaldDuck@gmail.com</Text>
+        <Text style={styles.textName}>{displayName}</Text>
+        <Text style={styles.textEmail}>{email}</Text>
       </View>
     </View>
   );
