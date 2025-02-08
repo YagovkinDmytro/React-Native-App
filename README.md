@@ -39,4 +39,3 @@ Step 5 "Redux and Firebase"
 - Update user profile in Firebase and store user data in Redux.
 - Add authorization verification logic and redirect to appropriate screens.
 - Implement login functionality, post upload, and commenting using Firebase and Redux.
-
