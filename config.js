@@ -12,7 +12,7 @@ const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_FIREBASE_API, //*<your api-key>*//
   authDomain: "react-native-app-yd.firebaseapp.com", //*<project-id>.firebaseapp.com*//
   projectId: "react-native-app-yd", //*<project-id>*//
-  storageBucket: "react-native-app-yd.firebasestorage.app", //*<your api-key>.firebasestorage.app*//
+  storageBucket: "gs://react-native-app-yd.firebasestorage.app", //*<your api-key>.firebasestorage.app*//
   //   databaseURL: "<https://<project-id>.firebaseio.com>", //*<https://<project-id>.firebaseio.com>*//
   //   messagingSenderId: "sender-id",
   //   appId: "app-id",

@@ -1,10 +1,10 @@
 import { StyleSheet, Image, Text, View } from "react-native";
 import { colors } from "../../styles/global";
 
-const MessageCard = ({ messages }) => {
+const MessageCard = ({ commentsInfo }) => {
   const noImageAvatar = require("../../assets/images/noImageAvatar.png");
 
-  return messages.map(({ id, text, time, avatar, sender }) => {
+  return commentsInfo.map(({ id, text, time, avatar, sender }) => {
     return (
       <View style={styles.containerMessages} key={id}>
         <Image

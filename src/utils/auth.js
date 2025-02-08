@@ -7,7 +7,12 @@ import {
 } from "firebase/auth";
 import { auth } from "../../config";
 import { setUserInfo, clearUserInfo } from "../redux/reducers/userSlice";
-import { addUser, getUser } from "./firestore";
+import { setPostsInfo, clearPostsInfo } from "../redux/reducers/postsSlice";
+import { addUser, getPosts, getUser } from "./firestore";
+import {
+  setCommentsInfo,
+  clearCommentsInfo,
+} from "../redux/reducers/commentsSlice";
 
 // Функція для реєстрації користувача
 export const registerDB = async ({ email, password, login, photoURL }) => {
@@ -35,13 +40,14 @@ export const loginDB = async ({ email, password }, dispatch) => {
   try {
     const credentials = await signInWithEmailAndPassword(auth, email, password);
     const user = credentials.user;
-
     dispatch(
       setUserInfo({
         uid: user.uid,
         email: user?.email || "",
       })
     );
+    authStateChanged(dispatch);
+
     return user;
   } catch (error) {
     console.log(error);
@@ -54,6 +60,8 @@ export const logoutDB = async (dispatch) => {
     await signOut(auth);
     // Очистити інформацію про користувача у Redux
     dispatch(clearUserInfo());
+    dispatch(clearPostsInfo());
+    dispatch(clearCommentsInfo());
   } catch (error) {
     console.error("Logout error:", error);
   }
@@ -73,6 +81,28 @@ export const authStateChanged = (dispatch) => {
     } else {
       dispatch(clearUserInfo());
     }
+    if (user) {
+      const userInfo = await getPosts(user.uid);
+
+      dispatch(
+        setPostsInfo({
+          ...userInfo,
+        })
+      );
+    } else {
+      dispatch(clearPostsInfo());
+    }
+    // if (user) {
+    //   const commentsInfo = await getComments(user.uid);
+
+    //   dispatch(
+    //     setCommentsInfo({
+    //       ...commentsInfo,
+    //     })
+    //   );
+    // } else {
+    //   dispatch(clearCommentsInfo());
+    // }
   });
 };
 

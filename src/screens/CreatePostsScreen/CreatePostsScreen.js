@@ -19,24 +19,33 @@ import MapPinIcon from "../../../icons/MapPinIcon";
 import TrashIcon from "../../../icons/TrashIcon";
 import CameraIcon from "../../../icons/CameraIcon";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import * as ImagePicker from "expo-image-picker";
 import * as Location from "expo-location";
+import { addPost, getPosts, uploadImage } from "../../utils/firestore";
+import { useDispatch, useSelector } from "react-redux";
+import "react-native-get-random-values";
+import { nanoid } from "nanoid";
+import { setPostsInfo } from "../../redux/reducers/postsSlice";
 
 const CreatePostsScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
+  const dispatch = useDispatch();
 
   const params = route?.params;
 
-  const picture = require("../../../assets/images/noImagePicture.png");
+  const noImagePicture = require("../../../assets/images/noImagePicture.png");
 
   const [post, setPost] = useState({
     title: "",
     nameLocation: "",
-    pictureUri: "",
     currentLocation: null,
     errorMsg: null,
-    photo: null,
+    photoUri: "",
+    uploadedImageUri: "",
   });
+
+  const user = useSelector((state) => state.user.userInfo);
 
   const isButtonDisabled = !post.title.trim() || !post.nameLocation.trim();
 
@@ -47,14 +56,62 @@ const CreatePostsScreen = () => {
     }));
   };
 
+  const pickImage = async () => {
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (!permissionResult.granted) {
+      Alert.alert("Permission", "Permission to access location was denied", [
+        {
+          text: "Ok",
+          onPress: () =>
+            console.log("Permission to access location was denied"),
+        },
+      ]);
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: "images",
+      allowsEditing: false,
+      quality: 1,
+    });
+    console.log(result);
+
+    if (!result.canceled) {
+      const uri = result.assets[0].uri;
+
+      handlePostChange("uploadedImageUri", uri);
+    }
+  };
+
+  const uploadImageToStorage = async () => {
+    if (!post.uploadedImageUri) return;
+
+    try {
+      const response = await fetch(post.uploadedImageUri);
+      const file = await response.blob();
+      const fileName = post.uploadedImageUri.split("/").pop(); // Отримуємо ім'я файлу з URI
+      const fileType = file.type; // Отримуємо тип файлу
+      const imageFile = new File([file], fileName, { type: fileType });
+
+      const uploadedImageUri = await uploadImage(user.uid, imageFile, fileName);
+
+      return uploadedImageUri;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
   const navigateToCameraScreen = () => {
     navigation.navigate("CameraScreen");
   };
 
   useEffect(() => {
-    if (!params?.photo) return;
+    if (!params?.photoUri) return;
 
-    handlePostChange("photo", params.photo);
+    handlePostChange("photoUri", params.photoUri);
 
     const getCurrentLocation = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -79,22 +136,48 @@ const CreatePostsScreen = () => {
     };
 
     getCurrentLocation();
-  }, [params?.photo]);
+  }, [params?.photoUri]);
 
-  const handleSubmit = () => {
-    navigation.navigate("Posts");
-
+  const onClearData = () => {
     handlePostChange("title", "");
     handlePostChange("nameLocation", "");
-    handlePostChange("photo", null);
+    handlePostChange("photoUri", "");
+    handlePostChange("uploadedImageUri", "");
+  };
 
-    const userPost = {
-      title: post.title,
-      nameLocation: post.nameLocation,
-      currentLocation: post.currentLocation,
-    };
+  const onPublish = async () => {
+    if (!user) return;
 
-    console.log("User Post:", userPost);
+    try {
+      const uploadedImageUri = await uploadImageToStorage();
+      const postId = nanoid();
+
+      await addPost(
+        user?.uid,
+        {
+          id: postId,
+          userId: user.uid,
+          title: post.title,
+          address: post.nameLocation,
+          image: uploadedImageUri,
+        },
+        postId
+      );
+
+      const postsData = await getPosts(user.uid);
+
+      dispatch(
+        setPostsInfo({
+          ...postsData,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
+    navigation.navigate("Posts");
+
+    onClearData();
   };
 
   const handleDeletePost = () => {
@@ -122,7 +205,11 @@ const CreatePostsScreen = () => {
               <View style={styles.containerImage}>
                 <Image
                   style={styles.img}
-                  source={post.photo ? { uri: post.photo } : picture}
+                  source={
+                    post.photoUri || post.uploadedImageUri
+                      ? { uri: post.photoUri || post.uploadedImageUri }
+                      : noImagePicture
+                  }
                 />
                 <Pressable
                   accessible={true}
@@ -135,7 +222,14 @@ const CreatePostsScreen = () => {
                 >
                   <CameraIcon width={24} height={24} />
                 </Pressable>
-                <Text style={styles.imgDescription}>Завантажте фото</Text>
+                <Pressable
+                  accessible={true}
+                  accessibilityLabel="Upload a photo"
+                  onPress={pickImage}
+                  style={({ pressed }) => [pressed && styles.pressed]}
+                >
+                  <Text style={styles.imgDescription}>Завантажте фото</Text>
+                </Pressable>
               </View>
               <InputCreatePost
                 value={post.title}
@@ -153,7 +247,7 @@ const CreatePostsScreen = () => {
                 <MapPinIcon style={styles.iconLoation} width="24" height="24" />
               </InputCreatePost>
               <Button
-                onPress={handleSubmit}
+                onPress={onPublish}
                 buttonTitle="Опубліковати"
                 disabled={isButtonDisabled}
               />

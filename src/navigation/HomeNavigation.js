@@ -1,6 +1,4 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import RegistrationScreen from "../screens/RegistrationScreen/RegistrationScreen";
-import LoginScreen from "../screens/LoginScreen/LoginScreen";
 import BottomNavigation from "./BottomNavigation";
 import MapScreenLocation from "../screens/MapScreenLocation/MapScreenLocation";
 import CommentsScreen from "../screens/CommentsScreen/CommentsScreen";
