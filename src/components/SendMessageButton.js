@@ -1,4 +1,4 @@
-import { StyleSheet, Pressable, View, Alert } from "react-native";
+import { StyleSheet, Pressable, View } from "react-native";
 import ArrowUp from "../../icons/ArrowUp";
 import { colors } from "../../styles/global";
 import { addComment } from "../utils/firestore";
@@ -17,6 +17,7 @@ const SendArrowButton = ({
 
   const onSendComment = async (userId, postId, newComment) => {
     await addComment(userId, postId, newComment);
+    handleInputChange("comment", "");
     await getComent(userId, postId, dispatch);
   };
 
@@ -26,7 +27,6 @@ const SendArrowButton = ({
       accessibilityLabel="Send"
       onPress={() => {
         onSendComment(userId, postId, newComment);
-        handleInputChange("comment", "");
       }}
       style={({ pressed }) => [styles.button, pressed && styles.pressed]}
     >

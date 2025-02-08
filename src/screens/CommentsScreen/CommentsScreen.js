@@ -24,29 +24,27 @@ const CommentsScreen = () => {
   const noImagePicture = require("../../../assets/images/noImagePicture.png");
   const dispatch = useDispatch();
   const route = useRoute();
-  const { userId, id, image } = route?.params;
+  // const { userId, id, image } = route?.params;
+  const params = route?.params;
 
   const [comments, setComments] = useState({
     comment: "",
   });
+
   const getComent = async (userId, id, dispatch) => {
     const allComments = await getComments(userId);
 
     if (allComments && id in allComments) {
-      dispatch(setCommentsInfo({ commentsInfo: allComments[id] }));
-    } else {
-      dispatch(setCommentsInfo({ commentsInfo: [] }));
+      dispatch(setCommentsInfo(allComments[id] || []));
     }
-
-    console.log("Fetched comments for post:", allComments[id] || []);
   };
 
-  useEffect(() => {
-    getComent(userId, id, dispatch);
-  }, [dispatch, userId, id]);
+  const commentsInfo = useSelector((state) => state.comments.commentsInfo);
+  console.log("commentsInfo in getComent:", commentsInfo);
 
-  const { commentsInfo } = useSelector((state) => state.comments.commentsInfo);
-  console.log(commentsInfo);
+  useEffect(() => {
+    getComent(params.userId, params.id, dispatch);
+  }, [dispatch, params.userId, params.id]);
 
   const handleInputChange = (name, value) => {
     setComments((prevUser) => ({
@@ -62,7 +60,7 @@ const CommentsScreen = () => {
         <View style={styles.container}>
           <Image
             style={styles.img}
-            source={image ? { uri: image } : noImagePicture}
+            source={params.image ? { uri: params.image } : noImagePicture}
           />
           <ScrollView
             keyboardShouldPersistTaps="handled"
@@ -81,8 +79,8 @@ const CommentsScreen = () => {
               onChangeText={(value) => handleInputChange("comment", value)}
             >
               <SendArrowButton
-                postId={id}
-                userId={userId}
+                userId={params.userId}
+                postId={params.id}
                 comment={comments.comment}
                 handleInputChange={handleInputChange}
                 getComent={getComent}
