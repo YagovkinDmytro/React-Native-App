@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db, storage } from "../../config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
@@ -14,14 +14,38 @@ export const addUser = async (userId, userData) => {
 
 export const addPost = async (userId, post) => {
   try {
-    await setDoc(
-      doc(db, "posts", userId),
-      { userId, posts: [post] },
-      { merge: true }
-    );
-    console.log("Post added:", userId);
+    const userDocRef = doc(db, "posts", userId);
+    const userDocSnap = await getDoc(userDocRef);
+    if (!userDocSnap.exists()) {
+      await setDoc(userDocRef, { posts: [post] }, { merge: true });
+    } else {
+      await updateDoc(userDocRef, {
+        posts: arrayUnion(post),
+      });
+    }
+
+    console.log("Post added successfully:", post);
   } catch (error) {
     console.error("Error adding post:", error);
+  }
+};
+
+export const addComment = async (userId, postId, comment) => {
+  try {
+    const userDocRef = doc(db, "comments", userId);
+    const userDocSnap = await getDoc(userDocRef);
+
+    if (!userDocSnap.exists()) {
+      await setDoc(userDocRef, { [postId]: [comment] }, { merge: true });
+    } else {
+      await updateDoc(userDocRef, {
+        [postId]: arrayUnion(comment),
+      });
+    }
+
+    console.log("Comment added successfully:", comment);
+  } catch (error) {
+    console.error("Error adding comment:", error);
   }
 };
 
@@ -31,10 +55,37 @@ export const getUser = async (userId) => {
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    console.log("User data:", docSnap.data());
+    console.log("FetchUser data:", docSnap.data());
     return docSnap.data();
   } else {
-    console.log("No such document!");
+    console.log("No such document User!");
+    return null;
+  }
+};
+
+// Функція для отримання документа з колекції
+export const getPosts = async (userId) => {
+  const docRef = doc(db, "posts", userId);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    console.log("Fetch Post data:", docSnap.data());
+    return docSnap.data();
+  } else {
+    console.log("No such document Post!");
+    return null;
+  }
+};
+
+export const getComments = async (userId) => {
+  const docRef = doc(db, "comments", userId);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    console.log("Fetch Comments data:", docSnap.data());
+    return docSnap.data();
+  } else {
+    console.log("No such document Comments!");
     return null;
   }
 };
@@ -52,7 +103,7 @@ export const updateUserInFirestore = async (uid, data) => {
 // Функція для завантаження зображення
 export const uploadImage = async (userId, file, fileName) => {
   try {
-    const imageRef = ref(storage, `profilePhotos/${userId}/${fileName}`);
+    const imageRef = ref(storage, `postPhotos/${userId}/${fileName}`);
     const result = await uploadBytes(imageRef, file);
 
     const imageUrl = await getImageUrl(imageRef);

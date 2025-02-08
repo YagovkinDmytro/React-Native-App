@@ -4,42 +4,53 @@ import MapPinIcon from "../../icons/MapPinIcon";
 import ThumbsUp from "../../icons/ThumbsUp";
 import { colors } from "../../styles/global";
 import { useNavigation } from "@react-navigation/native";
-import userData from "../../assets/data/userData";
+import { useSelector } from "react-redux";
 
 const PostCardItem = ({ screen }) => {
   const navigation = useNavigation();
+  const noImagePicture = require("../../assets/images/noImagePicture.png");
+
+  const { posts } = useSelector((state) => state.posts.postsInfo);
 
   const goToMap = (coordinates) => {
     navigation.navigate("Map", { coordinates });
   };
 
-  const goToMessage = () => {
-    navigation.navigate("Comments");
+  const goToComments = (userId, id, image) => {
+    navigation.navigate("Comments", { userId, id, image });
   };
 
-  return userData.map(
+  if (!Array.isArray(posts) || posts.length === 0) {
+    return <></>;
+  }
+
+  return posts.map(
     ({
       id,
       title,
-      messages,
-      fullLocation,
-      countryLocation,
-      picture,
-      like,
-      coordinates,
+      messages = 0,
+      address,
+      fullLocation = address,
+      image,
+      like = 100,
+      coordinates = { latitude: 48.492088, longitude: 24.267813 },
+      userId,
     }) => {
       return (
         <View style={styles.container} key={id}>
           <View>
-            <Image style={styles.img} source={picture} />
+            <Image
+              style={styles.img}
+              source={image ? { uri: image } : noImagePicture}
+            />
           </View>
           <Text style={styles.title}>{title}</Text>
           <View style={styles.containerInfo}>
             <View style={styles.containerInfoGroup}>
               <Pressable
                 accessible={true}
-                accessibilityLabel="Go to Map"
-                onPress={goToMessage}
+                accessibilityLabel="Go to Comments"
+                onPress={() => goToComments(userId, id, image)}
                 style={({ pressed }) => pressed && styles.pressed}
               >
                 <View style={styles.containerMessage}>
@@ -80,7 +91,7 @@ const PostCardItem = ({ screen }) => {
               <View style={styles.containerLocation}>
                 <MapPinIcon width="24" height="24" />
                 <Text style={styles.locationText}>
-                  {screen === "Home" ? countryLocation : fullLocation}
+                  {screen === "Home" ? address : fullLocation}
                 </Text>
               </View>
             </Pressable>
