@@ -30,3 +30,12 @@ Step 4 "Native components"
 - Add and store text information along with photos.
 - Use geolocation to determine location.
 - Customize screen transitions based on functionality related to photos and geolocation.
+
+Step 5 "Redux and Firebase"
+
+- Integrate Redux into your project to manage the state of application.
+- Connect Firebase for user authentication and data storage.
+- Implement registration and login functionality via Firebase.
+- Update user profile in Firebase and store user data in Redux.
+- Add authorization verification logic and redirect to appropriate screens.
+- Implement login functionality, post upload, and commenting using Firebase and Redux.
