@@ -4,7 +4,9 @@ import { colors } from "../../styles/global";
 const MessageCard = ({ commentsInfo }) => {
   const noImageAvatar = require("../../assets/images/noImageAvatar.png");
 
-  return commentsInfo.map(({ id, text, time, avatar, sender }) => {
+  console.log("commentsInfo in MessageCard:", commentsInfo);
+
+  return commentsInfo.map(({ id, text, time = "12:30", avatar, sender }) => {
     return (
       <View style={styles.containerMessages} key={id}>
         <Image

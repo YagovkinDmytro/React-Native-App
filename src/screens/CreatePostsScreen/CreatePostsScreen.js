@@ -47,6 +47,9 @@ const CreatePostsScreen = () => {
 
   const user = useSelector((state) => state.user.userInfo);
 
+  const commentsInfo = useSelector((state) => state.comments.commentsInfo);
+  console.log("commentsInfo in PostScreen:", commentsInfo);
+
   const isButtonDisabled = !post.title.trim() || !post.nameLocation.trim();
 
   const handlePostChange = (name, value) => {

@@ -1,12 +1,17 @@
 import { StyleSheet, Pressable, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import ArrowLeft from "../../icons/ArrowLeft";
+import { useDispatch } from "react-redux";
+import { setCommentsInfo } from "../redux/reducers/commentsSlice";
 
 const BackArrowLeftBotton = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const onBack = () => {
     navigation.goBack();
+
+    dispatch(setCommentsInfo([]));
   };
 
   return (

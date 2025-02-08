@@ -92,17 +92,6 @@ export const authStateChanged = (dispatch) => {
     } else {
       dispatch(clearPostsInfo());
     }
-    // if (user) {
-    //   const commentsInfo = await getComments(user.uid);
-
-    //   dispatch(
-    //     setCommentsInfo({
-    //       ...commentsInfo,
-    //     })
-    //   );
-    // } else {
-    //   dispatch(clearCommentsInfo());
-    // }
   });
 };
 

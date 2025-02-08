@@ -16,7 +16,7 @@ const PostCardItem = ({ screen }) => {
     navigation.navigate("Map", { coordinates });
   };
 
-  const goToComments = (userId, id, image) => {
+  const goToComments = ({ userId, id, image }) => {
     navigation.navigate("Comments", { userId, id, image });
   };
 
@@ -50,7 +50,7 @@ const PostCardItem = ({ screen }) => {
               <Pressable
                 accessible={true}
                 accessibilityLabel="Go to Comments"
-                onPress={() => goToComments(userId, id, image)}
+                onPress={() => goToComments({ userId, id, image })}
                 style={({ pressed }) => pressed && styles.pressed}
               >
                 <View style={styles.containerMessage}>
