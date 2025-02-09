@@ -13,7 +13,10 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -21,16 +24,22 @@
         "backgroundColor": "#ffffff"
       },
       "softwareKeyboardLayoutMode": "pan",
-      "package": "com.yagovkin.MyApp"
+      "package": "com.yagovkin.MyApp",
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-font"],
+    "plugins": [
+      "expo-font"
+    ],
     "extra": {
       "eas": {
         "projectId": "d1e52481-3ad7-4ffb-8bca-669106aaf984"
       }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/d1e52481-3ad7-4ffb-8bca-669106aaf984"
     }
   }
 }
