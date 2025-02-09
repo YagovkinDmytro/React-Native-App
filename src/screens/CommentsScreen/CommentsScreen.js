@@ -124,3 +124,23 @@ const styles = StyleSheet.create({
     margin: 16,
   },
 });
+
+{
+  /* <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+
+      <KeyboardAvoidingView
+
+        style={{ flex: 1 }}
+
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+
+      >
+
+<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}> <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"} >
+
+TouchableWithoutFeedback ховає клавіатуру при натисканні поза полем введення
+
+ KeyboardAvoidingView коректно піднімає InputMessage при відкритій клавіатурі
+
+ keyboardShouldPersistTaps="handled" у ScrollView не блокує взаємодію з коментарями */
+}
