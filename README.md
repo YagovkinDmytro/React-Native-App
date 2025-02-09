@@ -39,3 +39,9 @@ Step 5 "Redux and Firebase"
 - Update user profile in Firebase and store user data in Redux.
 - Add authorization verification logic and redirect to appropriate screens.
 - Implement login functionality, post upload, and commenting using Firebase and Redux.
+
+Step 6 "Deployment on the expo server"
+
+- Prepare your project for deployment.
+- Use Expo tools to publish your application.
+- Upload your project to Expo servers for further testing and access.
