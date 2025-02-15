@@ -77,15 +77,15 @@ const LoginScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar style="auto" />
-      <Pressable onPress={() => Keyboard.dismiss()}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <StatusBar style="auto" />
         <ImageBackground source={imageBG} style={styles.imageBackground}>
-          <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-          >
-            <View style={styles.containerSignIn}>
-              <Text style={styles.textTitle}>Увійти</Text>
+          <View style={styles.containerSignIn}>
+            <Text style={styles.textTitle}>Увійти</Text>
+            <KeyboardAvoidingView
+              behavior={Platform.OS == "ios" ? "padding" : "height"}
+            >
               <View style={styles.containerInput}>
                 <Input
                   value={user.email}
@@ -104,22 +104,22 @@ const LoginScreen = () => {
                   />
                 </Input>
               </View>
-              <Button onPress={onLogin} buttonTitle="Увійти" />
-              <View style={styles.buttonSignInContainer}>
-                <Text style={[styles.baseText, styles.buttonText]}>
-                  Немає акаунту?
+            </KeyboardAvoidingView>
+            <Button onPress={onLogin} buttonTitle="Увійти" />
+            <View style={styles.buttonSignInContainer}>
+              <Text style={[styles.baseText, styles.buttonText]}>
+                Немає акаунту?
+              </Text>
+              <Pressable onPress={onSignUp}>
+                <Text style={[styles.baseText, styles.buttonSignInText]}>
+                  Зареєструватися
                 </Text>
-                <TouchableWithoutFeedback onPress={onSignUp}>
-                  <Text style={[styles.baseText, styles.buttonSignInText]}>
-                    Зареєструватися
-                  </Text>
-                </TouchableWithoutFeedback>
-              </View>
+              </Pressable>
             </View>
-          </KeyboardAvoidingView>
+          </View>
         </ImageBackground>
-      </Pressable>
-    </SafeAreaView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
