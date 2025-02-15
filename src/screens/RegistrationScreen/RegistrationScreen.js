@@ -91,36 +91,36 @@ const RegistrationScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar style="auto" />
-      <Pressable onPress={() => Keyboard.dismiss()}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <StatusBar style="auto" />
         <ImageBackground source={imageBG} style={styles.imageBackground}>
-          <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-          >
-            <View style={styles.containerSignUp}>
-              <View style={styles.imageContainer}>
-                <Image
-                  style={styles.imageAvatar}
-                  source={
-                    user.avatarUri ? { uri: user.avatarUri } : noImageAvatar
-                  }
-                ></Image>
-                <Pressable
-                  accessible={true}
-                  accessibilityLabel="Add Avatar"
-                  onPress={handleAddAvatar}
-                  style={({ pressed }) => [
-                    styles.buttonAdd,
-                    pressed && styles.pressed,
-                  ]}
-                >
-                  <View>
-                    <CirclePlusSvg width="25" height="25" />
-                  </View>
-                </Pressable>
-              </View>
-              <Text style={styles.textTitle}>Реєстрація</Text>
+          <View style={styles.containerSignUp}>
+            <View style={styles.imageContainer}>
+              <Image
+                style={styles.imageAvatar}
+                source={
+                  user.avatarUri ? { uri: user.avatarUri } : noImageAvatar
+                }
+              ></Image>
+              <Pressable
+                accessible={true}
+                accessibilityLabel="Add Avatar"
+                onPress={handleAddAvatar}
+                style={({ pressed }) => [
+                  styles.buttonAdd,
+                  pressed && styles.pressed,
+                ]}
+              >
+                <View>
+                  <CirclePlusSvg width="25" height="25" />
+                </View>
+              </Pressable>
+            </View>
+            <Text style={styles.textTitle}>Реєстрація</Text>
+            <KeyboardAvoidingView
+              behavior={Platform.OS == "ios" ? "padding" : "height"}
+            >
               <View style={styles.containerInput}>
                 <Input
                   value={user.login}
@@ -144,22 +144,22 @@ const RegistrationScreen = () => {
                   />
                 </Input>
               </View>
-              <Button onPress={onSignUp} buttonTitle="Зареєстуватися" />
-              <View style={styles.buttonSignInContainer}>
-                <Text style={[styles.baseText, styles.buttonText]}>
-                  Вже є акаунт?
+            </KeyboardAvoidingView>
+            <Button onPress={onSignUp} buttonTitle="Зареєстуватися" />
+            <View style={styles.buttonSignInContainer}>
+              <Text style={[styles.baseText, styles.buttonText]}>
+                Вже є акаунт?
+              </Text>
+              <Pressable onPress={onSignIn}>
+                <Text style={[styles.baseText, styles.buttonSignInText]}>
+                  Увійти
                 </Text>
-                <TouchableWithoutFeedback onPress={onSignIn}>
-                  <Text style={[styles.baseText, styles.buttonSignInText]}>
-                    Увійти
-                  </Text>
-                </TouchableWithoutFeedback>
-              </View>
+              </Pressable>
             </View>
-          </KeyboardAvoidingView>
+          </View>
         </ImageBackground>
-      </Pressable>
-    </SafeAreaView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 

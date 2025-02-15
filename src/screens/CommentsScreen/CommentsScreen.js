@@ -7,7 +7,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
+  TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
 import { colors } from "../../../styles/global";
@@ -24,7 +24,6 @@ const CommentsScreen = () => {
   const noImagePicture = require("../../../assets/images/noImagePicture.png");
   const dispatch = useDispatch();
   const route = useRoute();
-  // const { userId, id, image } = route?.params;
   const params = route?.params;
 
   const [comments, setComments] = useState({
@@ -54,20 +53,27 @@ const CommentsScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.safeAreaView}>
-      <StatusBar style="auto" />
-      <Pressable style={{ flex: 1 }} onPress={() => Keyboard.dismiss()}>
+    <TouchableWithoutFeedback
+      onPress={Keyboard.dismiss}
+      accessible={false}
+      touchSoundDisabled={true}
+    >
+      <SafeAreaView style={styles.safeAreaView}>
+        <StatusBar style="auto" />
         <View style={styles.container}>
           <Image
             style={styles.img}
             source={params.image ? { uri: params.image } : noImagePicture}
           />
-          <ScrollView
-            keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
-          >
-            <MessageCard commentsInfo={commentsInfo} />
-          </ScrollView>
+          <View style={{ flex: 1 }}>
+            <ScrollView
+              keyboardShouldPersistTaps="handled"
+              keyboardDismissMode="on-drag"
+              showsVerticalScrollIndicator={false}
+            >
+              <MessageCard commentsInfo={commentsInfo} />
+            </ScrollView>
+          </View>
         </View>
         <KeyboardAvoidingView
           behavior={Platform.OS == "ios" ? "padding" : "height"}
@@ -88,8 +94,8 @@ const CommentsScreen = () => {
             </InputMessage>
           </View>
         </KeyboardAvoidingView>
-      </Pressable>
-    </SafeAreaView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -136,7 +142,8 @@ const styles = StyleSheet.create({
 
       >
 
-<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}> <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"} >
+<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}> <KeyboardAvoidingView style={{ flex: 1 }} 
+behavior={Platform.OS === "ios" ? "padding" : "height"} >
 
 TouchableWithoutFeedback ховає клавіатуру при натисканні поза полем введення
 
